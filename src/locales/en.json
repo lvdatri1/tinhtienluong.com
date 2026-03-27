@@ -1,0 +1,20 @@
+{
+  "title": "Vietnam Salary Calculator",
+  "subtitle": "Calculate your net income easily with latest 2024 tax rules",
+  "grossSalary": "Gross Salary",
+  "dependents": "Number of Dependents",
+  "isExpat": "I am an Expat",
+  "isLocal": "I am a Local Citizen",
+  "exchangeRate": "Exchange Rate (1 USD = VND)",
+  "calculate": "Calculate Net Income",
+  "grossIncome": "Gross Income",
+  "socialInsurance": "Social Insurance (8%)",
+  "healthInsurance": "Health Insurance (1.5%)",
+  "unemploymentInsurance": "Unemployment Insurance (1%)",
+  "totalBeforeTax": "Income Before Tax",
+  "personalDeduction": "Personal Deduction",
+  "dependentDeduction": "Dependent Deduction",
+  "taxableIncome": "Taxable Income",
+  "personalIncomeTax": "Personal Income Tax (PIT)",
+  "netIncome": "Net Income"
+}

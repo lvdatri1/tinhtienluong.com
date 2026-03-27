@@ -1,0 +1,20 @@
+{
+  "title": "Công cụ Tính Lương",
+  "subtitle": "Tính thuế thu nhập cá nhân mới nhất năm 2024",
+  "grossSalary": "Lương Gross",
+  "dependents": "Số người phụ thuộc",
+  "isExpat": "Người nước ngoài",
+  "isLocal": "Người Việt Nam",
+  "exchangeRate": "Tỉ giá (1 USD = VNĐ)",
+  "calculate": "Tính Lương Net",
+  "grossIncome": "Tổng Lương (Gross)",
+  "socialInsurance": "Bảo hiểm Xã hội (8%)",
+  "healthInsurance": "Bảo hiểm Y tế (1.5%)",
+  "unemploymentInsurance": "Bảo hiểm Thất nghiệp (1%)",
+  "totalBeforeTax": "Thu nhập trước Thuế",
+  "personalDeduction": "Giảm trừ gia cảnh bản thân",
+  "dependentDeduction": "Giảm trừ người phụ thuộc",
+  "taxableIncome": "Thu nhập chịu Thuế",
+  "personalIncomeTax": "Thuế Thu Nhập Cá Nhân",
+  "netIncome": "Lương Net"
+}
