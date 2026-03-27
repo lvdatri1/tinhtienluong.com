@@ -21,5 +21,17 @@
   "annually": "Annually",
   "fortnightly": "Fortnightly",
   "incomeBreakdown": "Income Breakdown",
-  "totalInsurance": "Total Insurance"
+  "totalInsurance": "Total Insurance",
+  "faq": "FAQ",
+  "faqTitle": "Frequently Asked Questions",
+  "faqDescription": "Learn more about Vietnam salary laws and deduction rules.",
+  "q1": "What is Personal Deduction?",
+  "a1": "Every employee in Vietnam is entitled to a personal deduction of 11,000,000 VND per month from their taxable income.",
+  "q2": "What counts as a Dependent?",
+  "a2": "Dependents can include children under 18, students with low income, or elderly parents. Each dependent reduces your taxable income by 4,400,000 VND per month.",
+  "q3": "How is PIT calculated?",
+  "a3": "Personal Income Tax (PIT) is calculated using a progressive table with rates from 5% to 35% based on your taxable income.",
+  "dependentTooltip": "Each eligible dependent (children, parents) reduces taxable income by 4.4M VND/month.",
+  "grossTooltip": "Your total salary before any insurance or tax deductions.",
+  "backToHome": "Back to Home"
 }

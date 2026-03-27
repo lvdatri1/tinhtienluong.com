@@ -21,5 +21,17 @@
   "annually": "Hàng năm",
   "fortnightly": "Mỗi 2 tuần",
   "incomeBreakdown": "Biểu đồ Thu nhập",
-  "totalInsurance": "Tổng Bảo hiểm"
+  "totalInsurance": "Tổng Bảo hiểm",
+  "faq": "Hỏi đáp (FAQ)",
+  "faqTitle": "Các câu hỏi thường gặp",
+  "faqDescription": "Tìm hiểu thêm về luật lương và các quy định giảm trừ tại Việt Nam.",
+  "q1": "Giảm trừ gia cảnh bản thân là gì?",
+  "a1": "Mọi người lao động tại Việt Nam đều được giảm trừ gia cảnh bản thân là 11.000.000 VNĐ/tháng trước khi tính thuế.",
+  "q2": "Ai được tính là người phụ thuộc?",
+  "a2": "Người phụ thuộc bao gồm con dưới 18 tuổi, sinh viên có thu nhập thấp, hoặc cha mẹ già. Mỗi người phụ thuộc giúp giảm thu nhập chịu thuế thêm 4.400.000 VNĐ/tháng.",
+  "q3": "Thuế TNCN được tính như thế nào?",
+  "a3": "Thuế Thu Nhập Cá Nhân được tính theo biểu thuế lũy tiến từng phần với các mức thuế suất từ 5% đến 35%.",
+  "dependentTooltip": "Mỗi người phụ thuộc hợp lệ (con cái, cha mẹ) giúp giảm thu nhập chịu thuế 4.4tr VNĐ/tháng.",
+  "grossTooltip": "Tổng mức lương của bạn trước khi trừ bảo hiểm và thuế.",
+  "backToHome": "Quay lại trang chủ"
 }

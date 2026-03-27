@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import Script from 'next/script';
 
 export const metadata: Metadata = {
   title: 'Vietnam Salary Calculator | Tinh Tien Luong',
@@ -25,6 +26,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <Script 
+          async 
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5070036872443533"
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
+      </head>
       <body>
         {children}
       </body>

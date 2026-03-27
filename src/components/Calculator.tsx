@@ -5,7 +5,8 @@ import styles from './Calculator.module.css';
 import { calculateNetIncome, TaxResult } from '../utils/taxCalculation';
 import en from '../locales/en.json';
 import vi from '../locales/vi.json';
-import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { PieChart, Pie, Cell, Tooltip as RechartsTooltip, Legend, ResponsiveContainer } from 'recharts';
+import InfoTooltip from './Tooltip';
 
 export default function Calculator() {
   const [lang, setLang] = useState<'en' | 'vi'>('en');
@@ -183,7 +184,12 @@ export default function Calculator() {
 
         <form onSubmit={handleCalculate} className={styles.formGrid}>
           <div className={styles.inputGroup}>
-            <label className={styles.label}>{t.grossSalary} ({currency})</label>
+            <label className={styles.label}>
+              {t.grossSalary} ({currency})
+              <InfoTooltip text={t.grossTooltip}>
+                <span className={styles.infoIcon}>ⓘ</span>
+              </InfoTooltip>
+            </label>
             <input 
               type="text" 
               inputMode="decimal"
@@ -208,7 +214,12 @@ export default function Calculator() {
           </div>
 
           <div className={styles.inputGroup}>
-            <label className={styles.label}>{t.dependents}</label>
+            <label className={styles.label}>
+              {t.dependents}
+              <InfoTooltip text={t.dependentTooltip}>
+                <span className={styles.infoIcon}>ⓘ</span>
+              </InfoTooltip>
+            </label>
             <input 
               type="number" 
               className={styles.input} 
@@ -338,7 +349,7 @@ export default function Calculator() {
                       <Cell key={`cell-${index}`} fill={entry.color} />
                     ))}
                   </Pie>
-                  <Tooltip 
+                  <RechartsTooltip 
                     formatter={(value: any, name: any, props: any) => [
                       `${formatCurrency(Number(value), 'VND')} (${props.payload.percentStr}%)`,
                       name
