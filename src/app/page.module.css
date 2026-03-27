@@ -27,6 +27,7 @@
   font-weight: 700;
   background: linear-gradient(to right, var(--text-primary), var(--text-accent));
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 0.5rem;
 }
@@ -45,4 +46,21 @@
   border-top: 1px solid var(--surface-border);
   width: 100%;
   max-width: 800px;
+}
+
+.seoContent {
+  max-width: 800px;
+  width: 100%;
+  margin: 3rem auto 0 auto;
+  padding: 1.5rem;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  background: rgba(0,0,0,0.1);
+  border-radius: var(--radius-md);
+}
+
+.seoContent h2 {
+  font-size: 1.15rem;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
 }

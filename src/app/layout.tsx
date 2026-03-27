@@ -3,7 +3,19 @@ import './globals.css';
 
 export const metadata: Metadata = {
   title: 'Vietnam Salary Calculator | Tinh Tien Luong',
-  description: 'Calculate your net income easily with latest 2024 tax rules for Expats and Locals in Vietnam (USD and VND supported).',
+  description: 'Free, highly accurate Vietnam Salary Calculator for 2024. Calculate gross to net income, PIT, Social Insurance, Health Insurance for Expats and Locals in VND, USD dynamically.',
+  keywords: ['Vietnam Salary Calculator', 'Vietnam Net Income', 'Vietnam Income Tax Calculator', 'Tinh Tien Luong', 'Vietnam Expat Tax', 'Vietnam PIT 2024'],
+  authors: [{ name: 'Tinh Tien Luong' }],
+  openGraph: {
+    title: 'Vietnam Salary Calculator - Gross to Net',
+    description: 'Instantly calculate your Vietnam net income from your gross salary. Supports Monthly, Annually, Fortnightly across VND and USD. Works offline and is insanely fast.',
+    url: 'https://tinhtienluong.com',
+    siteName: 'Tinh Tien Luong',
+    type: 'website'
+  },
+  alternates: {
+    canonical: 'https://tinhtienluong.com'
+  }
 };
 
 export default function RootLayout({

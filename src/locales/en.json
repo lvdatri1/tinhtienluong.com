@@ -16,5 +16,10 @@
   "dependentDeduction": "Dependent Deduction",
   "taxableIncome": "Taxable Income",
   "personalIncomeTax": "Personal Income Tax (PIT)",
-  "netIncome": "Net Income"
+  "netIncome": "Net Income",
+  "monthly": "Monthly",
+  "annually": "Annually",
+  "fortnightly": "Fortnightly",
+  "incomeBreakdown": "Income Breakdown",
+  "totalInsurance": "Total Insurance"
 }

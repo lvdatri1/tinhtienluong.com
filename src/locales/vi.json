@@ -16,5 +16,10 @@
   "dependentDeduction": "Giảm trừ người phụ thuộc",
   "taxableIncome": "Thu nhập chịu Thuế",
   "personalIncomeTax": "Thuế Thu Nhập Cá Nhân",
-  "netIncome": "Lương Net"
+  "netIncome": "Lương Net",
+  "monthly": "Hàng tháng",
+  "annually": "Hàng năm",
+  "fortnightly": "Mỗi 2 tuần",
+  "incomeBreakdown": "Biểu đồ Thu nhập",
+  "totalInsurance": "Tổng Bảo hiểm"
 }

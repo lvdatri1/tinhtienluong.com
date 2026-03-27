@@ -4,6 +4,7 @@ export interface TaxConfig {
   isExpat: boolean;
   currency: 'VND' | 'USD';
   exchangeRate: number; // 1 USD = ? VND
+  period: 'monthly' | 'annually' | 'fortnightly';
 }
 
 export interface TaxResult {
@@ -12,6 +13,7 @@ export interface TaxResult {
   socialInsuranceVND: number;
   healthInsuranceVND: number;
   unemploymentInsuranceVND: number;
+  totalInsuranceVND: number;
   totalBeforeTaxVND: number;
   personalDeductionVND: number;
   dependentDeductionVND: number;
@@ -21,8 +23,8 @@ export interface TaxResult {
   netIncomeUSD: number;
 }
 
-// Vietnam Tax Constants (Region I, typical default)
-const BASE_SALARY_SI_HI = 2340000; // Updated July 2024
+// Vietnam Tax Constants (Region I, typical default) ALL IN MONTHLY BASIS
+const BASE_SALARY_SI_HI = 2340000;
 const REGION_1_MIN_WAGE = 4960000;
 const CAP_SI_HI = BASE_SALARY_SI_HI * 20; // 46,800,000
 const CAP_UI = REGION_1_MIN_WAGE * 20;    // 99,200,000
@@ -71,20 +73,25 @@ function calculatePIT(taxableIncome: number): number {
 }
 
 export function calculateNetIncome(config: TaxConfig): TaxResult {
-  const { grossSalary, dependents, isExpat, currency, exchangeRate } = config;
+  const { grossSalary, dependents, isExpat, currency, exchangeRate, period } = config;
+
+  // 1. Convert to Monthly basis for Vietnam PIT laws
+  let monthlyScale = 1;
+  if (period === 'annually') monthlyScale = 1 / 12;
+  else if (period === 'fortnightly') monthlyScale = 26 / 12;
+  
+  const monthlyGross = grossSalary * monthlyScale;
 
   // Convert gross to VND for calculation
-  const grossVND = currency === 'USD' ? grossSalary * exchangeRate : grossSalary;
-  const grossUSD = currency === 'VND' ? grossSalary / exchangeRate : grossSalary;
+  const grossVND = currency === 'USD' ? monthlyGross * exchangeRate : monthlyGross;
 
-  // Insurance Calculations
+  // Insurance Calculations (Caps applied accurately to Monthly gross)
   const siSalary = Math.min(grossVND, CAP_SI_HI);
   const hiSalary = Math.min(grossVND, CAP_SI_HI);
   const uiSalary = Math.min(grossVND, CAP_UI);
 
   const socialInsuranceVND = siSalary * RATE_SI;
   const healthInsuranceVND = hiSalary * RATE_HI;
-  // Expats typically don't pay Unemployment Insurance in VN
   const unemploymentInsuranceVND = isExpat ? 0 : uiSalary * RATE_UI;
 
   const totalInsurance = socialInsuranceVND + healthInsuranceVND + unemploymentInsuranceVND;
@@ -99,20 +106,26 @@ export function calculateNetIncome(config: TaxConfig): TaxResult {
   const personalIncomeTaxVND = calculatePIT(taxableIncomeVND);
 
   const netIncomeVND = totalBeforeTaxVND - personalIncomeTaxVND;
-  const netIncomeUSD = netIncomeVND / exchangeRate;
+
+  // 2. Scale back to the requested Period
+  const resultScale = 1 / monthlyScale;
+  
+  const finalGrossVND = grossVND * resultScale;
+  const finalNetVND = netIncomeVND * resultScale;
 
   return {
-    grossVND,
-    grossUSD,
-    socialInsuranceVND,
-    healthInsuranceVND,
-    unemploymentInsuranceVND,
-    totalBeforeTaxVND,
-    personalDeductionVND,
-    dependentDeductionVND,
-    taxableIncomeVND,
-    personalIncomeTaxVND,
-    netIncomeVND,
-    netIncomeUSD
+    grossVND: finalGrossVND,
+    grossUSD: finalGrossVND / exchangeRate,
+    socialInsuranceVND: socialInsuranceVND * resultScale,
+    healthInsuranceVND: healthInsuranceVND * resultScale,
+    unemploymentInsuranceVND: unemploymentInsuranceVND * resultScale,
+    totalInsuranceVND: totalInsurance * resultScale,
+    totalBeforeTaxVND: totalBeforeTaxVND * resultScale,
+    personalDeductionVND: personalDeductionVND * resultScale,
+    dependentDeductionVND: dependentDeductionVND * resultScale,
+    taxableIncomeVND: taxableIncomeVND * resultScale,
+    personalIncomeTaxVND: personalIncomeTaxVND * resultScale,
+    netIncomeVND: finalNetVND,
+    netIncomeUSD: finalNetVND / exchangeRate
   };
 }

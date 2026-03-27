@@ -16,6 +16,13 @@ export default function Home() {
         <Calculator />
       </div>
 
+      <section className={styles.seoContent}>
+        <h2>About Vietnam Personal Income Tax 2024</h2>
+        <p>
+          The <strong>Vietnam Salary Calculator (Tinh Tien Luong)</strong> helps expats and local residents securely estimate their net income without any data leaving your device. It accurately evaluates modern progressive tax brackets (from 5% to 35%), compulsory insurance deductions like Social Insurance (8%), Health Insurance (1.5%), and Unemployment Insurance (1%), alongside base deductions like the 11M VND personal allowance. Calculate your USD or VND gross salary instantly across monthly, fortnightly, or annual tracking periods.
+        </p>
+      </section>
+
       <footer className={styles.footer}>
         <p>&copy; {new Date().getFullYear()} Tinh Tien Luong. Built with statically exported Next.js + Vanilla CSS.</p>
       </footer>
