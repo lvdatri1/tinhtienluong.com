@@ -91,6 +91,45 @@
 .itemValue {
   font-weight: 600;
   color: #fff;
+  transition: color 0.3s;
+}
+
+.itemValue.selected {
+  color: var(--primary);
+  text-decoration: underline;
+}
+
+.dailyRow {
+  padding-top: 0.5rem;
+  border-top: 1px dashed rgba(255, 255, 255, 0.1);
+  margin-top: 0.5rem;
+}
+
+.toggleGroup {
+  display: flex;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.3rem;
+  border-radius: 8px;
+  border: 1px solid var(--surface-border);
+}
+
+.toggleBtn {
+  flex: 1;
+  padding: 0.5rem;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.toggleBtn.active {
+  background: var(--primary);
+  color: white;
 }
 
 .totalCard {

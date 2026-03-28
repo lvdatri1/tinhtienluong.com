@@ -65,6 +65,7 @@ export default function LivingCostCalculator({ lang }: LivingCostProps) {
   const t: any = lang === 'en' ? en : vi;
   const [city, setCity] = useState<'hcmc' | 'hanoi' | 'danang' | 'haiphong' | 'cantho'>('hcmc');
   const [lifestyle, setLifestyle] = useState<'local' | 'mid' | 'premium'>('mid');
+  const [rentLocation, setRentLocation] = useState<'center' | 'outskirts'>('center');
 
   const currentData = useMemo(() => {
     const base = CITY_DATA[city];
@@ -82,13 +83,12 @@ export default function LivingCostCalculator({ lang }: LivingCostProps) {
   }, [city, lifestyle]);
 
   const totalMonthly = useMemo(() => {
-    // Estimate total = Rent (Avg) + 30*3 Meals + 30 Coffees + Utilities + Transport + Gym
     const monthlyFood = currentData.meal * 3 * 30;
     const monthlyCoffee = currentData.coffee * 30;
-    const avgRent = (currentData.rentCenter + currentData.rentOutside) / 2;
+    const selectedRent = rentLocation === 'center' ? currentData.rentCenter : currentData.rentOutside;
     
-    return Math.round(avgRent + monthlyFood + monthlyCoffee + currentData.utilities + currentData.transport + currentData.gym);
-  }, [currentData]);
+    return Math.round(selectedRent + monthlyFood + monthlyCoffee + currentData.utilities + currentData.transport + currentData.gym);
+  }, [currentData, rentLocation]);
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat(lang === 'en' ? 'en-US' : 'vi-VN', {
@@ -131,6 +131,20 @@ export default function LivingCostCalculator({ lang }: LivingCostProps) {
             <option value="premium">{t.lifestylePremium}</option>
           </select>
         </div>
+
+        <div className={styles.inputGroup}>
+          <label className={styles.label}>{t.rentArea}</label>
+          <div className={styles.toggleGroup}>
+            <button 
+              className={`${styles.toggleBtn} ${rentLocation === 'center' ? styles.active : ''}`}
+              onClick={() => setRentLocation('center')}
+            >{t.center}</button>
+            <button 
+              className={`${styles.toggleBtn} ${rentLocation === 'outskirts' ? styles.active : ''}`}
+              onClick={() => setRentLocation('outskirts')}
+            >{t.outskirts}</button>
+          </div>
+        </div>
       </div>
 
       <div className={styles.costGrid}>
@@ -138,19 +152,27 @@ export default function LivingCostCalculator({ lang }: LivingCostProps) {
           <h3 className={styles.categoryTitle}>{t.rent}</h3>
           <div className={styles.costItem}>
             <span className={styles.itemName}>{t.rentCenter1BR}</span>
-            <span className={styles.itemValue}>{formatCurrency(currentData.rentCenter)}</span>
+            <span className={`${styles.itemValue} ${rentLocation === 'center' ? styles.selected : ''}`}>
+              {formatCurrency(currentData.rentCenter)}
+            </span>
           </div>
           <div className={styles.costItem}>
             <span className={styles.itemName}>{t.rentOutside1BR}</span>
-            <span className={styles.itemValue}>{formatCurrency(currentData.rentOutside)}</span>
+            <span className={`${styles.itemValue} ${rentLocation === 'outskirts' ? styles.selected : ''}`}>
+              {formatCurrency(currentData.rentOutside)}
+            </span>
           </div>
         </div>
 
         <div className={styles.categoryCard}>
           <h3 className={styles.categoryTitle}>{t.food}</h3>
           <div className={styles.costItem}>
-            <span className={styles.itemName}>{t.mealLocal}</span>
+            <span className={styles.itemName}>{t.mealLocal} ({t.perMeal})</span>
             <span className={styles.itemValue}>{formatCurrency(currentData.meal)}</span>
+          </div>
+          <div className={`${styles.costItem} ${styles.dailyRow}`}>
+            <span className={styles.itemName}>{t.dailyFood} (3x)</span>
+            <span className={styles.itemValue}>{formatCurrency(currentData.meal * 3)}</span>
           </div>
           <div className={styles.costItem}>
             <span className={styles.itemName}>{t.coffee}</span>
