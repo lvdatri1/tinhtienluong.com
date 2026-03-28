@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Calculator from '@/components/Calculator';
 import BenefitCalculator from '@/components/BenefitCalculator';
 import LivingCostCalculator from '@/components/LivingCostCalculator';
@@ -13,6 +13,15 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState<'pit' | 'benefits' | 'cost' | 'mortgage'>('pit');
   const [lang, setLang] = useState<'en' | 'vi'>('en');
   const t: any = lang === 'en' ? en : vi;
+
+  useEffect(() => {
+    document.title = t.pageTitle;
+    document.documentElement.lang = lang;
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+      metaDesc.setAttribute('content', t.metaDescription);
+    }
+  }, [lang, t.pageTitle, t.metaDescription]);
 
   return (
     <main className={styles.main}>

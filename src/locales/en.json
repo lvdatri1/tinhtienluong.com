@@ -1,6 +1,8 @@
 {
   "title": "Vietnam Salary Calculator",
-  "subtitle": "Calculate your net income easily with latest 2024 tax rules",
+  "subtitle": "Calculate Gross to Net, Social Insurance, Cost of Living, and Mortgages for 2024-2025.",
+  "pageTitle": "Vietnam Salary & Financial Calculator | Gross to Net 2025",
+  "metaDescription": "The ultimate financial tool for Vietnam. Calculate Gross to Net salary, Personal Income Tax (PIT), Social Insurance, Cost of Living, and Mortgages for HCMC, Hanoi, and more.",
   "grossSalary": "Gross Salary",
   "dependents": "Number of Dependents",
   "isExpat": "I am an Expat",
