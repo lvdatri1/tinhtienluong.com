@@ -53,12 +53,34 @@
 .faqList {
   display: flex;
   flex-direction: column;
-  gap: 2.5rem;
+  gap: 4rem;
+}
+
+.categorySection {
+  background: rgba(255, 255, 255, 0.02);
+  padding: 2rem;
+  border-radius: 16px;
+  border: 1px solid var(--surface-border);
+}
+
+.categoryTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  color: var(--text-accent);
+  border-bottom: 1px solid var(--surface-border);
+  padding-bottom: 0.5rem;
+  display: block;
+}
+
+.categoryItems {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 
 .faqItem {
-  border-bottom: 1px solid var(--surface-border);
-  padding-bottom: 2rem;
+  padding-bottom: 1rem;
 }
 
 .faqItem:last-child {

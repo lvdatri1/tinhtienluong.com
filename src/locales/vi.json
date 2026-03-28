@@ -23,14 +23,46 @@
   "incomeBreakdown": "Biểu đồ Thu nhập",
   "totalInsurance": "Tổng Bảo hiểm",
   "faq": "Hỏi đáp (FAQ)",
-  "faqTitle": "Các câu hỏi thường gặp",
-  "faqDescription": "Tìm hiểu thêm về luật lương và các quy định giảm trừ tại Việt Nam.",
-  "q1": "Giảm trừ gia cảnh bản thân là gì?",
-  "a1": "Mọi người lao động tại Việt Nam đều được giảm trừ gia cảnh bản thân là 11.000.000 VNĐ/tháng trước khi tính thuế.",
-  "q2": "Ai được tính là người phụ thuộc?",
-  "a2": "Người phụ thuộc bao gồm con dưới 18 tuổi, sinh viên có thu nhập thấp, hoặc cha mẹ già. Mỗi người phụ thuộc giúp giảm thu nhập chịu thuế thêm 4.400.000 VNĐ/tháng.",
-  "q3": "Thuế TNCN được tính như thế nào?",
-  "a3": "Thuế Thu Nhập Cá Nhân được tính theo biểu thuế lũy tiến từng phần với các mức thuế suất từ 5% đến 35%.",
+  "faqTitle": "Câu hỏi thường gặp (FAQ)",
+  "faqDescription": "Thông tin thiết yếu về lương, thuế, bảo hiểm và các công cụ tài chính tại Việt Nam.",
+  "faqCategories": {
+    "salary": {
+      "title": "Lương & Thuế TNCN",
+      "items": [
+        { "q": "Mức giảm trừ gia cảnh năm 2024 là bao nhiêu?", "a": "Mức giảm trừ đối với đối tượng nộp thuế là 11.000.000 đồng/tháng. Mức giảm trừ cho mỗi người phụ thuộc là 4.400.000 đồng/tháng." },
+        { "q": "Lương Gross và lương Net khác nhau thế nào?", "a": "Lương Gross là tổng thu nhập trước khi trừ các khoản đóng bảo hiểm và thuế. Lương Net là số tiền thực nhận sau khi đã trừ 8% BHXH, 1.5% BHYT, 1% BHTN và Thuế TNCN." },
+        { "q": "Mức trần đóng BHXH là bao nhiêu?", "a": "BHXH và BHYT có mức trần đóng là 20 lần mức lương cơ sở (hiện là 46.800.000đ). BHTN có mức trần là 20 lần mức lương tối thiểu vùng (tối đa 99.200.000đ tại Vùng 1)." }
+      ]
+    },
+    "insurance": {
+      "title": "Chế độ BHXH (Thai sản, Ốm đau)",
+      "items": [
+        { "q": "Cách tính tiền hưởng chế độ Thai sản?", "a": "Lao động nữ được hưởng 100% mức bình quân tiền lương tháng đóng BHXH của 06 tháng trước khi nghỉ việc. Ngoài ra còn được trợ cấp một lần bằng 02 lần mức lương cơ sở (khoảng 4.68 triệu đồng)." },
+        { "q": "Điều kiện hưởng trợ cấp Thất nghiệp?", "a": "Bạn phải đóng BHTN từ đủ 12 tháng trở lên. Mức hưởng bằng 60% mức bình quân tiền lương 06 tháng liền kề trước khi thất nghiệp. Thời gian hưởng tùy thuộc vào số năm đóng (12-36 tháng được hưởng 3 tháng, sau đó cứ thêm 1 năm đóng được thêm 1 tháng)." }
+      ]
+    },
+    "payout": {
+      "title": "BHXH 1 Lần & Luật 2025",
+      "items": [
+        { "q": "Luật BHXH 2024 ảnh hưởng thế nào đến việc rút 1 lần?", "a": "Từ 01/07/2025, người mới tham gia BHXH sẽ không được rút 1 lần sau 12 tháng nghỉ việc. Tuy nhiên, nếu bạn đã tham gia trước tháng 07/2025, bạn vẫn giữ nguyên quyền rút BHXH 1 lần theo quy định hiện hành." },
+        { "q": "Hệ số trượt giá là gì?", "a": "Đây là hệ số điều chỉnh tiền lương đã đóng BHXH nhằm bù đắp sự mất giá của đồng tiền, giúp số tiền bạn nhận được ở hiện tại tương xứng với giá trị tại thời điểm đóng trong quá khứ." }
+      ]
+    },
+    "living": {
+      "title": "Chi phí sinh hoạt & Thuê nhà",
+      "items": [
+        { "q": "Dữ liệu chi phí sinh hoạt lấy từ đâu?", "a": "Dữ liệu được tổng hợp từ thống kê của Numbeo, các khảo sát cộng đồng người nước ngoài và giá thuê nhà thực tế tại TP.HCM, Hà Nội và Đà Nẵng." },
+        { "q": "Sự khác biệt giữa các mức sống là gì?", "a": "Local: Ăn uống tại quán địa phương, đi chợ, thuê phòng chung. Mid: Ăn nhà hàng bình dân, căn hộ studio, kết hợp hàng nội/ngoại nhập. Expat: Ăn đồ Tây, căn hộ cao cấp, chủ yếu dùng hàng nhập khẩu." }
+      ]
+    },
+    "mortgage": {
+      "title": "Vay vốn & Trả góp",
+      "items": [
+        { "q": "Tại sao lãi suất thường tăng mạnh sau 12 tháng?", "a": "Các ngân hàng thường chỉ ưu đãi lãi suất trong 6-12 tháng đầu. Sau đó sẽ áp dụng lãi suất thả nổi = Lãi suất cơ sở (khoảng 8-9%) + Biên độ (3-4%)." },
+        { "q": "Nên chọn Dư nợ giảm dần hay Trả đều (Annuity)?", "a": "Dư nợ giảm dần giúp tổng tiền lãi phải trả thấp hơn. Trả đều giúp bạn chủ động kế hoạch tài chính vì số tiền trả mỗi tháng là cố định, dù tổng lãi sẽ cao hơn một chút." }
+      ]
+    }
+  },
   "dependentTooltip": "Mỗi người phụ thuộc hợp lệ (con cái, cha mẹ) giúp giảm thu nhập chịu thuế 4.4tr VNĐ/tháng.",
   "grossTooltip": "Tổng mức lương của bạn trước khi trừ bảo hiểm và thuế.",
   "backToHome": "Quay lại trang chủ",

@@ -34,30 +34,19 @@ export default function FAQPage() {
           <p className={styles.description}>{t.faqDescription}</p>
 
           <div className={styles.faqList}>
-            <div className={styles.faqItem}>
-              <h2 className={styles.question}>{t.q1}</h2>
-              <p className={styles.answer}>{t.a1}</p>
-            </div>
-            
-            <div className={styles.faqItem}>
-              <h2 className={styles.question}>{t.q2}</h2>
-              <p className={styles.answer}>{t.a2}</p>
-            </div>
-
-            <div className={styles.faqItem}>
-              <h2 className={styles.question}>{t.q4}</h2>
-              <p className={styles.answer}>{t.a4}</p>
-            </div>
-
-            <div className={styles.faqItem}>
-              <h2 className={styles.question}>{t.q5}</h2>
-              <p className={styles.answer}>{t.a5}</p>
-            </div>
-
-            <div className={styles.faqItem}>
-              <h2 className={styles.question}>{t.q6}</h2>
-              <p className={styles.answer}>{t.a6}</p>
-            </div>
+            {Object.values(t.faqCategories || {}).map((category: any, catIdx: number) => (
+              <div key={catIdx} className={styles.categorySection}>
+                <h2 className={styles.categoryTitle}>{category.title}</h2>
+                <div className={styles.categoryItems}>
+                  {category.items.map((item: any, itemIdx: number) => (
+                    <div key={itemIdx} className={styles.faqItem}>
+                      <h3 className={styles.question}>{item.q}</h3>
+                      <p className={styles.answer}>{item.a}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>

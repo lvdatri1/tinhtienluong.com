@@ -27,13 +27,45 @@
   "totalInsurance": "Total Insurance",
   "faq": "FAQ",
   "faqTitle": "Frequently Asked Questions",
-  "faqDescription": "Learn more about Vietnam salary laws and deduction rules.",
-  "q1": "What is Personal Deduction?",
-  "a1": "Every employee in Vietnam is entitled to a personal deduction of 11,000,000 VND per month from their taxable income.",
-  "q2": "What counts as a Dependent?",
-  "a2": "Dependents can include children under 18, students with low income, or elderly parents. Each dependent reduces your taxable income by 4,400,000 VND per month.",
-  "q3": "How is PIT calculated?",
-  "a3": "Personal Income Tax (PIT) is calculated using a progressive table with rates from 5% to 35% based on your taxable income.",
+  "faqDescription": "Essential information about salary, tax, insurance, and financial tools in Vietnam.",
+  "faqCategories": {
+    "salary": {
+      "title": "Salary & Income Tax (PIT)",
+      "items": [
+        { "q": "What is the Personal Income Tax (PIT) threshold in 2024?", "a": "The personal tax-free threshold is 11,000,000 VND per month. Additionally, you get a deduction of 4,400,000 VND per month for each qualified dependent." },
+        { "q": "What is the difference between Gross and Net salary?", "a": "Gross salary is the total amount before any deductions. Net salary is your 'Take-home pay' after subtracting Social Insurance (8%), Health Insurance (1.5%), Unemployment Insurance (1%), and Personal Income Tax." },
+        { "q": "Is there a ceiling for Social Insurance contributions?", "a": "Yes. Social Insurance and Health Insurance contributions are capped at 20 times the base salary (currently 46,800,000 VND). The Unemployment Insurance cap is 20 times the regional minimum wage (max 99,200,000 VND in Region 1)." }
+      ]
+    },
+    "insurance": {
+      "title": "SI Benefits (Maternity, Sickness)",
+      "items": [
+        { "q": "How is the Maternity (Thai sản) benefit calculated?", "a": "Qualified mothers receive 100% of their average salary (last 6 months) for 6 months. Additionally, there is a one-time allowance equal to 2 months of the current base salary (approx 4.68M VND)." },
+        { "q": "What are the rules for Unemployment Benefit (Thất nghiệp)?", "a": "You must have contributed for at least 12 months. The payout is 60% of your average salary of the last 6 months, capped at 5x the regional minimum wage. Duration is based on total years (12-36 months = 3 months benefit, +1 year = +1 month benefit)." }
+      ]
+    },
+    "payout": {
+      "title": "One-time SI Payout & 2025 Law",
+      "items": [
+        { "q": "How does the 'Law on Social Insurance 2024' affect me?", "a": "Starting July 1, 2025, new participants cannot withdraw BHXH 'one-time' after 12 months. However, if you started contributing BEFORE July 2025, you retain the right to withdraw as per current rules." },
+        { "q": "What is the 'Inflation Coefficient' (Hệ số trượt giá)?", "a": "It is a multiplier set by the government to scale older salaries to current values, ensuring your past contributions maintain their purchasing power when calculated today." }
+      ]
+    },
+    "living": {
+      "title": "Cost of Living & Rent",
+      "items": [
+        { "q": "Where does the cost of living data come from?", "a": "Data is sourced from a combination of Numbeo local statistics, expat community surveys, and current rental listings in HCMC, Hanoi, and Da Nang." },
+        { "q": "What's the difference between lifestyle levels?", "a": "Local: Street food, local markets, shared room. Mid: Local restaurants, decent studio, mix of local/import goods. Expat: Western dining, high-end apartment, mostly imported products." }
+      ]
+    },
+    "mortgage": {
+      "title": "Mortgage & Loans",
+      "items": [
+        { "q": "Why is the interest rate so high after 12 months?", "a": "Most Vietnamese banks offer 'Promotional Rates' for the first 6-12 months. After that, they switch to a 'Floating Rate' which is usually the base rate (approx 8-9%) plus a margin (3-4%)." },
+        { "q": "Which is better: Reducing Balance or Annuity?", "a": "Reducing Balance (Dư nợ giảm dần) results in lower total interest over time. Annuity (Fixed Payment) helps with stable monthly budgeting, though you pay slightly more interest overall." }
+      ]
+    }
+  },
   "dependentTooltip": "Each eligible dependent (children, parents) reduces taxable income by 4.4M VND/month.",
   "grossTooltip": "Your total salary before any insurance or tax deductions.",
   "backToHome": "Back to Home",
