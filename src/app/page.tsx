@@ -72,6 +72,10 @@ export default function Home() {
         {activeTab === 'benefits' && <BenefitCalculator lang={lang} />}
         {activeTab === 'cost' && <LivingCostCalculator lang={lang} />}
         {activeTab === 'mortgage' && <MortgageCalculator lang={lang} />}
+
+        <div className={styles.disclaimerBox}>
+          <p>{t.disclaimer}</p>
+        </div>
       </div>
 
       <section className={styles.seoContent}>

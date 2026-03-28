@@ -128,3 +128,22 @@
   color: var(--text-primary);
   margin-bottom: 0.75rem;
 }
+
+.disclaimerBox {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  border-radius: 12px;
+  background: rgba(var(--primary-rgb), 0.05);
+  border: 1px dashed rgba(var(--primary-rgb), 0.2);
+  text-align: center;
+}
+
+.disclaimerBox p {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  font-style: italic;
+  line-height: 1.5;
+  margin: 0;
+  max-width: 650px;
+  margin: 0 auto;
+}

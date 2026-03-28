@@ -72,6 +72,7 @@
   "a6": "Đóng đủ 12-36 tháng được hưởng 03 tháng trợ cấp, sau đó cứ thêm 12 tháng đóng được hưởng thêm 01 tháng trợ cấp, tối đa 12 tháng.",
   "seoTitle": "Về Công Cụ Tài Chính Việt Nam",
   "seoDescription": "Bộ công cụ tính toán toàn diện của chúng tôi được thiết kế để hỗ trợ cả người nước ngoài và chuyên gia trong nước tại Việt Nam. Cho dù bạn cần tính lương thực nhận sau khi trừ Thuế Thu nhập Cá nhân (TNCN), hiểu rõ các khoản đóng Bảo hiểm Xã hội (BHXH), ước tính chi phí sinh hoạt tại các thành phố lớn như TP.HCM hay Hà Nội, hoặc lên kế hoạch vay vốn với công cụ tính lãi suất vay ngân hàng kiểu Việt Nam (hỗ trợ Dư nợ giảm dần và Lãi suất ưu đãi), chúng tôi luôn đồng hành cùng bạn. Tất cả các tính toán đều được cập nhật theo quy định 2024–2025, bao gồm bảng lương cơ sở và lương tối thiểu vùng mới nhất.",
+  "disclaimer": "Lưu ý: Công cụ này chỉ mang tính chất tham khảo. Do tính chất phức tạp của các quy định pháp luật Việt Nam, kết quả có thể có sai lệch so với thực tế. Vui lòng tham khảo ý kiến chuyên gia để có kết quả chính xác nhất.",
   "learnMoreFaq": "Tìm hiểu thêm trong phần Hỏi đáp (FAQ)",
   "footerCredit": "Xây dựng bằng Next.js (Static Export) + Vanilla CSS.",
   "salaryTab": "Lương / Thuế TNCN",
