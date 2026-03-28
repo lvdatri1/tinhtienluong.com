@@ -5,6 +5,7 @@ export interface TaxConfig {
   currency: 'VND' | 'USD';
   exchangeRate: number; // 1 USD = ? VND
   period: 'monthly' | 'annually' | 'fortnightly';
+  bonus: number;
 }
 
 export interface TaxResult {
@@ -73,7 +74,7 @@ function calculatePIT(taxableIncome: number): number {
 }
 
 export function calculateNetIncome(config: TaxConfig): TaxResult {
-  const { grossSalary, dependents, isExpat, currency, exchangeRate, period } = config;
+  const { grossSalary, dependents, isExpat, currency, exchangeRate, period, bonus } = config;
 
   // 1. Convert to Monthly basis for Vietnam PIT laws
   let monthlyScale = 1;
@@ -81,11 +82,14 @@ export function calculateNetIncome(config: TaxConfig): TaxResult {
   else if (period === 'fortnightly') monthlyScale = 26 / 12;
   
   const monthlyGross = grossSalary * monthlyScale;
+  const monthlyBonus = bonus * monthlyScale;
 
-  // Convert gross to VND for calculation
+  // Convert gross and bonus to VND for calculation
   const grossVND = currency === 'USD' ? monthlyGross * exchangeRate : monthlyGross;
+  const bonusVND = currency === 'USD' ? monthlyBonus * exchangeRate : monthlyBonus;
 
   // Insurance Calculations (Caps applied accurately to Monthly gross)
+  // Note: Insurance is typically calculated only on the regular gross salary, not bonuses.
   const siSalary = Math.min(grossVND, CAP_SI_HI);
   const hiSalary = Math.min(grossVND, CAP_SI_HI);
   const uiSalary = Math.min(grossVND, CAP_UI);
@@ -95,7 +99,9 @@ export function calculateNetIncome(config: TaxConfig): TaxResult {
   const unemploymentInsuranceVND = isExpat ? 0 : uiSalary * RATE_UI;
 
   const totalInsurance = socialInsuranceVND + healthInsuranceVND + unemploymentInsuranceVND;
-  const totalBeforeTaxVND = grossVND - totalInsurance;
+  
+  // Taxable income is (Salary + Bonus) - Insurance - Deductions
+  const totalBeforeTaxVND = grossVND + bonusVND - totalInsurance;
 
   const personalDeductionVND = PERSONAL_DEDUCTION;
   const dependentDeductionVND = dependents * DEPENDENT_DEDUCTION;

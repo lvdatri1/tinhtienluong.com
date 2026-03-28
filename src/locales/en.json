@@ -36,6 +36,8 @@
   "backToHome": "Back to Home",
   "salaryCalculator": "PIT Calculator",
   "benefitsCalculator": "Benefits Calculator",
+  "bonus": "Bonus",
+  "bonusTooltip": "One-time or occasional bonuses. These are taxed for PIT but usually excluded from Social Insurance base.",
   "unemploymentMode": "Unemployment",
   "deathSupportMode": "Death Support",
   "avgSalary6Mo": "Avg Salary (Last 6 months)",

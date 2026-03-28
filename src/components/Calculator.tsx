@@ -22,6 +22,7 @@ export default function Calculator({ initialLang = 'en' }: CalculatorProps) {
   }, [initialLang]);
 
   const [grossSalary, setGrossSalary] = useState<string>('30000000');
+  const [bonus, setBonus] = useState<string>('0');
   const [dependents, setDependents] = useState<number>(0);
   const [currency, setCurrency] = useState<'VND' | 'USD'>('VND');
   const [isExpat, setIsExpat] = useState<boolean>(false);
@@ -36,6 +37,7 @@ export default function Calculator({ initialLang = 'en' }: CalculatorProps) {
     // Since we now use locale-aware formatting, let's just strip everything non-numeric except the decimal point if it exists
     // But for now, we'll just strip all non-digits to be safe with toLocaleString results
     const cleanGross = parseFloat(grossSalary.replace(/[^0-9]/g, ''));
+    const cleanBonus = parseFloat(bonus.replace(/[^0-9]/g, '')) || 0;
     const cleanRate = parseFloat(exchangeRate.replace(/[^0-9]/g, ''));
 
 
@@ -47,7 +49,8 @@ export default function Calculator({ initialLang = 'en' }: CalculatorProps) {
       isExpat,
       currency,
       exchangeRate: cleanRate,
-      period
+      period,
+      bonus: cleanBonus
     });
 
     setResult(res);
@@ -61,6 +64,10 @@ export default function Calculator({ initialLang = 'en' }: CalculatorProps) {
 
   const handleGrossChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setGrossSalary(formatNumber(e.target.value));
+  };
+
+  const handleBonusChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setBonus(formatNumber(e.target.value));
   };
 
   const handleExchangeRateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -94,7 +101,8 @@ export default function Calculator({ initialLang = 'en' }: CalculatorProps) {
             isExpat,
             currency,
             exchangeRate: parsedRate,
-            period: newPeriod
+            period: newPeriod,
+            bonus: parseFloat(bonus.replace(/[^0-9]/g, '')) || 0
           }));
         }
       }
@@ -208,18 +216,35 @@ export default function Calculator({ initialLang = 'en' }: CalculatorProps) {
               placeholder={`e.g. ${currency === 'USD' ? '2,500' : '30,000,000'}`}
               required
             />
-            {grossSalary && exchangeRate && !isNaN(parseFloat(grossSalary.replace(/,/g, ''))) && (
+            {grossSalary && exchangeRate && !isNaN(parseFloat(grossSalary.replace(/[^0-9]/g, ''))) && (
               <div className={styles.helperText}>
                 ≈ {new Intl.NumberFormat(lang === 'en' ? 'en-US' : 'vi-VN', {
                   style: 'currency',
                   currency: currency === 'USD' ? 'VND' : 'USD',
                   maximumFractionDigits: currency === 'USD' ? 0 : 2,
                 }).format(currency === 'USD' 
-                  ? parseFloat(grossSalary.replace(/,/g, '')) * parseFloat(exchangeRate) 
-                  : parseFloat(grossSalary.replace(/,/g, '')) / parseFloat(exchangeRate)
+                  ? (parseFloat(grossSalary.replace(/[^0-9]/g, '')) + (parseFloat(bonus.replace(/[^0-9]/g, '')) || 0)) * parseFloat(exchangeRate) 
+                  : (parseFloat(grossSalary.replace(/[^0-9]/g, '')) + (parseFloat(bonus.replace(/[^0-9]/g, '')) || 0)) / parseFloat(exchangeRate)
                 )}
               </div>
             )}
+          </div>
+
+          <div className={styles.inputGroup}>
+            <label className={styles.label}>
+              {t.bonus} ({currency})
+              <InfoTooltip text={t.bonusTooltip}>
+                <span className={styles.infoIcon}>ⓘ</span>
+              </InfoTooltip>
+            </label>
+            <input 
+              type="text" 
+              inputMode="decimal"
+              className={styles.input} 
+              value={bonus}
+              onChange={handleBonusChange}
+              placeholder={`e.g. ${currency === 'USD' ? '500' : '5,000,000'}`}
+            />
           </div>
 
           <div className={styles.inputGroup}>

@@ -36,6 +36,8 @@
   "backToHome": "Quay lại trang chủ",
   "salaryCalculator": "Tính Thuế TNCN",
   "benefitsCalculator": "Tính Chế Độ Bảo Hiểm",
+  "bonus": "Tiền Thưởng",
+  "bonusTooltip": "Các khoản thưởng đột xuất hoặc không thường xuyên. Khoản này chịu thuế TNCN nhưng thường không tính đóng BHXH.",
   "unemploymentMode": "Thất Nghiệp",
   "deathSupportMode": "Tử Tuất",
   "avgSalary6Mo": "Lương bình quân 6 tháng cuối",
