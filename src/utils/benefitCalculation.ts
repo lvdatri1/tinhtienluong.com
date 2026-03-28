@@ -68,13 +68,22 @@ export function calculateDeathSupport(
 ): DeathBenefitResult {
   const funeralAllowance = BASE_SALARY * 10;
   
+  // Cap the salary for SI calculation at 20x Base Salary (46.8M VND)
+  const cappedSalary = Math.min(avgSalaryLife, BASE_SALARY * 20);
+
   // Monthly benefit per relative
   const monthlySurvivorBenefit = hasUnskilledRelative 
     ? BASE_SALARY * 0.7 
     : BASE_SALARY * 0.5;
 
-  // One-time benefit (approximate logic)
-  const oneTimeSurvivorBenefit = (yearsPre2014 * 1.5 + yearsPost2014 * 2) * avgSalaryLife;
+  // One-time benefit formula (Art 70 Law on Social Insurance)
+  // 1.5 months for pre-2014 years, 2 months for post-2014 years
+  let oneTimeSurvivorBenefit = (yearsPre2014 * 1.5 + yearsPost2014 * 2) * cappedSalary;
+
+  // Legal minimum for one-time benefit is 3 months of average salary
+  if (oneTimeSurvivorBenefit > 0 && oneTimeSurvivorBenefit < cappedSalary * 3) {
+    oneTimeSurvivorBenefit = cappedSalary * 3;
+  }
 
   return {
     funeralAllowance,
