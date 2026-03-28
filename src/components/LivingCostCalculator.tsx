@@ -16,44 +16,49 @@ interface CostData {
 
 const CITY_DATA: Record<string, any> = {
   hcmc: {
-    rentCenter: { local: 10000000, mid: 18000000, premium: 30000000 },
-    rentOutside: { local: 5500000, mid: 10000000, premium: 18000000 },
+    room: { local: 3500000, mid: 6000000, premium: 10000000 },
+    studio: { local: 8000000, mid: 15000000, premium: 25000000 },
+    apartment: { local: 15000000, mid: 28000000, premium: 50000000 },
     meal: { local: 35000, mid: 65000, premium: 180000 },
     coffee: { local: 20000, mid: 45000, premium: 85000 },
     gym: { local: 350000, mid: 800000, premium: 2000000 },
-    utilities: { local: 1500000, mid: 2500000, premium: 4500000 }
+    utilities: { local: 1000000, mid: 2000000, premium: 4000000 }
   },
   hanoi: {
-    rentCenter: { local: 9000000, mid: 16000000, premium: 26000000 },
-    rentOutside: { local: 5000000, mid: 9000000, premium: 15000000 },
+    room: { local: 3000000, mid: 5500000, premium: 9000000 },
+    studio: { local: 7000000, mid: 13000000, premium: 22000000 },
+    apartment: { local: 13000000, mid: 25000000, premium: 45000000 },
     meal: { local: 35000, mid: 55000, premium: 150000 },
     coffee: { local: 18000, mid: 40000, premium: 75000 },
     gym: { local: 300000, mid: 700000, premium: 1800000 },
-    utilities: { local: 1200000, mid: 2200000, premium: 3800000 }
+    utilities: { local: 900000, mid: 1800000, premium: 3500000 }
   },
   danang: {
-    rentCenter: { local: 6500000, mid: 10000000, premium: 18000000 },
-    rentOutside: { local: 4000000, mid: 6500000, premium: 10000000 },
+    room: { local: 2500000, mid: 4000000, premium: 6500000 },
+    studio: { local: 5000000, mid: 8500000, premium: 15000000 },
+    apartment: { local: 9000000, mid: 16000000, premium: 30000000 },
     meal: { local: 30000, mid: 45000, premium: 100000 },
     coffee: { local: 15000, mid: 35000, premium: 65000 },
     gym: { local: 250000, mid: 550000, premium: 1200000 },
-    utilities: { local: 1000000, mid: 1800000, premium: 2800000 }
+    utilities: { local: 800000, mid: 1500000, premium: 2500000 }
   },
   haiphong: {
-    rentCenter: { local: 7500000, mid: 12000000, premium: 20000000 },
-    rentOutside: { local: 4000000, mid: 7000000, premium: 12000000 },
+    room: { local: 2800000, mid: 4500000, premium: 7000000 },
+    studio: { local: 6000000, mid: 10000000, premium: 18000000 },
+    apartment: { local: 11000000, mid: 20000000, premium: 35000000 },
     meal: { local: 35000, mid: 50000, premium: 120000 },
     coffee: { local: 18000, mid: 40000, premium: 70000 },
     gym: { local: 280000, mid: 600000, premium: 1500000 },
-    utilities: { local: 1100000, mid: 2000000, premium: 3200000 }
+    utilities: { local: 900000, mid: 1600000, premium: 2800000 }
   },
   cantho: {
-    rentCenter: { local: 5000000, mid: 8000000, premium: 14000000 },
-    rentOutside: { local: 3000000, mid: 5000000, premium: 9000000 },
+    room: { local: 2000000, mid: 3500000, premium: 5500000 },
+    studio: { local: 4000000, mid: 7000000, premium: 12000000 },
+    apartment: { local: 8000000, mid: 14000000, premium: 25000000 },
     meal: { local: 25000, mid: 40000, premium: 100000 },
     coffee: { local: 15000, mid: 30000, premium: 60000 },
     gym: { local: 200000, mid: 450000, premium: 1000000 },
-    utilities: { local: 900000, mid: 1600000, premium: 2500000 }
+    utilities: { local: 700000, mid: 1400000, premium: 2200000 }
   }
 };
 
@@ -66,29 +71,43 @@ export default function LivingCostCalculator({ lang }: LivingCostProps) {
   const [city, setCity] = useState<'hcmc' | 'hanoi' | 'danang' | 'haiphong' | 'cantho'>('hcmc');
   const [lifestyle, setLifestyle] = useState<'local' | 'mid' | 'premium'>('mid');
   const [rentLocation, setRentLocation] = useState<'center' | 'outskirts'>('center');
+  const [householdSize, setHouseholdSize] = useState<number>(1);
+  const [housingType, setHousingType] = useState<'room' | 'studio' | 'apartment'>('studio');
 
   const currentData = useMemo(() => {
     const base = CITY_DATA[city];
     const ls = lifestyle;
     
+    // Rent logic: Base price according to type, multiplied by 0.7 if outskirts
+    const roomBase = base.room[ls];
+    const studioBase = base.studio[ls];
+    const apartmentBase = base.apartment[ls];
+    const areaMult = rentLocation === 'outskirts' ? 0.7 : 1;
+
     return {
-      rentCenter: base.rentCenter[ls],
-      rentOutside: base.rentOutside[ls],
+      rent: Math.round((housingType === 'room' ? roomBase : housingType === 'studio' ? studioBase : apartmentBase) * areaMult),
       meal: base.meal[ls],
       coffee: base.coffee[ls],
       gym: base.gym[ls],
       utilities: base.utilities[ls],
       transport: ls === 'local' ? 800000 : ls === 'mid' ? 1500000 : 3500000
     };
-  }, [city, lifestyle]);
+  }, [city, lifestyle, housingType, rentLocation]);
 
   const totalMonthly = useMemo(() => {
-    const monthlyFood = currentData.meal * 3 * 30;
-    const monthlyCoffee = currentData.coffee * 30;
-    const selectedRent = rentLocation === 'center' ? currentData.rentCenter : currentData.rentOutside;
+    const size = householdSize;
+    // Scale factors: Food/Transport linear, Utilities shared (1.5x for 2, 2.2x for 4)
+    const sizeMultUtilities = size === 1 ? 1 : size === 2 ? 1.5 : 2.2;
+    const sizeMultLinear = size === 1 ? 1 : size === 2 ? 2 : 3.5;
+
+    const monthlyFood = currentData.meal * 3 * 30 * sizeMultLinear;
+    const monthlyCoffee = currentData.coffee * 30 * sizeMultLinear;
+    const monthlyUtilities = currentData.utilities * sizeMultUtilities;
+    const monthlyTransport = currentData.transport * sizeMultLinear;
+    const monthlyGym = currentData.gym * sizeMultLinear;
     
-    return Math.round(selectedRent + monthlyFood + monthlyCoffee + currentData.utilities + currentData.transport + currentData.gym);
-  }, [currentData, rentLocation]);
+    return Math.round(currentData.rent + monthlyFood + monthlyCoffee + monthlyUtilities + monthlyTransport + monthlyGym);
+  }, [currentData, householdSize]);
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat(lang === 'en' ? 'en-US' : 'vi-VN', {
@@ -133,6 +152,32 @@ export default function LivingCostCalculator({ lang }: LivingCostProps) {
         </div>
 
         <div className={styles.inputGroup}>
+          <label className={styles.label}>{t.householdSize}</label>
+          <select 
+            className={styles.select}
+            value={householdSize}
+            onChange={(e) => setHouseholdSize(parseInt(e.target.value))}
+          >
+            <option value="1">{t.single}</option>
+            <option value="2">{t.couple}</option>
+            <option value="4">{t.family}</option>
+          </select>
+        </div>
+
+        <div className={styles.inputGroup}>
+          <label className={styles.label}>{t.housingType}</label>
+          <select 
+            className={styles.select}
+            value={housingType}
+            onChange={(e) => setHousingType(e.target.value as any)}
+          >
+            <option value="room">{t.sharedRoom}</option>
+            <option value="studio">{t.studio}</option>
+            <option value="apartment">{t.apartment2BR}</option>
+          </select>
+        </div>
+
+        <div className={styles.inputGroup}>
           <label className={styles.label}>{t.rentArea}</label>
           <div className={styles.toggleGroup}>
             <button 
@@ -151,16 +196,15 @@ export default function LivingCostCalculator({ lang }: LivingCostProps) {
         <div className={styles.categoryCard}>
           <h3 className={styles.categoryTitle}>{t.rent}</h3>
           <div className={styles.costItem}>
-            <span className={styles.itemName}>{t.rentCenter1BR}</span>
-            <span className={`${styles.itemValue} ${rentLocation === 'center' ? styles.selected : ''}`}>
-              {formatCurrency(currentData.rentCenter)}
+            <span className={styles.itemName}>
+              {housingType === 'room' ? t.sharedRoom : housingType === 'studio' ? t.studio : t.apartment2BR}
+            </span>
+            <span className={`${styles.itemValue} styles.selected`}>
+              {formatCurrency(currentData.rent)}
             </span>
           </div>
-          <div className={styles.costItem}>
-            <span className={styles.itemName}>{t.rentOutside1BR}</span>
-            <span className={`${styles.itemValue} ${rentLocation === 'outskirts' ? styles.selected : ''}`}>
-              {formatCurrency(currentData.rentOutside)}
-            </span>
+          <div className={styles.costItem} style={{ fontSize: '0.8rem', opacity: 0.7 }}>
+            <span className={styles.itemName}>{rentLocation === 'center' ? t.center : t.outskirts}</span>
           </div>
         </div>
 
