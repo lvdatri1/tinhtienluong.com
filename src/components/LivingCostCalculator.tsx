@@ -92,6 +92,8 @@ export default function LivingCostCalculator({ lang }: LivingCostProps) {
   const [householdSize, setHouseholdSize] = useState<number>(1);
   const [housingType, setHousingType] = useState<'room' | 'studio' | 'apartment'>('studio');
 
+  const EXCHANGE_RATE = 25500; // Reference 1 USD = 25,500 VND (March 2025 avg)
+
   const currentData = useMemo(() => {
     const base = CITY_DATA[city];
     const ls = lifestyle;
@@ -127,7 +129,14 @@ export default function LivingCostCalculator({ lang }: LivingCostProps) {
     return Math.round(currentData.rent + monthlyFood + monthlyCoffee + monthlyUtilities + monthlyTransport + monthlyGym);
   }, [currentData, householdSize]);
 
-  const formatCurrency = (amount: number) => {
+  const formatCurrency = (amount: number, currency: 'VND' | 'USD' = 'VND') => {
+    if (currency === 'USD') {
+      return new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        maximumFractionDigits: 0,
+      }).format(amount / EXCHANGE_RATE);
+    }
     return new Intl.NumberFormat(lang === 'en' ? 'en-US' : 'vi-VN', {
       style: 'currency',
       currency: 'VND',
@@ -221,6 +230,7 @@ export default function LivingCostCalculator({ lang }: LivingCostProps) {
             </span>
             <span className={`${styles.itemValue} styles.selected`}>
               {formatCurrency(currentData.rent)}
+              <span className={styles.usdRef}>{formatCurrency(currentData.rent, 'USD')}</span>
             </span>
           </div>
           <div className={styles.costItem} style={{ fontSize: '0.8rem', opacity: 0.7 }}>
@@ -232,15 +242,24 @@ export default function LivingCostCalculator({ lang }: LivingCostProps) {
           <h3 className={styles.categoryTitle}>{t.food}</h3>
           <div className={styles.costItem}>
             <span className={styles.itemName}>{t.mealLocal} ({t.perMeal})</span>
-            <span className={styles.itemValue}>{formatCurrency(currentData.meal)}</span>
+            <span className={styles.itemValue}>
+              {formatCurrency(currentData.meal)}
+              <span className={styles.usdRef}>{formatCurrency(currentData.meal, 'USD')}</span>
+            </span>
           </div>
           <div className={`${styles.costItem} ${styles.dailyRow}`}>
             <span className={styles.itemName}>{t.dailyFood} (3x)</span>
-            <span className={styles.itemValue}>{formatCurrency(currentData.meal * 3)}</span>
+            <span className={styles.itemValue}>
+              {formatCurrency(currentData.meal * 3)}
+              <span className={styles.usdRef}>{formatCurrency(currentData.meal * 3, 'USD')}</span>
+            </span>
           </div>
           <div className={styles.costItem}>
             <span className={styles.itemName}>{t.coffee}</span>
-            <span className={styles.itemValue}>{formatCurrency(currentData.coffee)}</span>
+            <span className={styles.itemValue}>
+              {formatCurrency(currentData.coffee)}
+              <span className={styles.usdRef}>{formatCurrency(currentData.coffee, 'USD')}</span>
+            </span>
           </div>
         </div>
 
@@ -248,23 +267,35 @@ export default function LivingCostCalculator({ lang }: LivingCostProps) {
           <h3 className={styles.categoryTitle}>{t.other}</h3>
           <div className={styles.costItem}>
             <span className={styles.itemName}>{t.utilities}</span>
-            <span className={styles.itemValue}>{formatCurrency(currentData.utilities)}</span>
+            <span className={styles.itemValue}>
+              {formatCurrency(currentData.utilities)}
+              <span className={styles.usdRef}>{formatCurrency(currentData.utilities, 'USD')}</span>
+            </span>
           </div>
           <div className={styles.costItem}>
             <span className={styles.itemName}>{t.gym}</span>
-            <span className={styles.itemValue}>{formatCurrency(currentData.gym)}</span>
+            <span className={styles.itemValue}>
+              {formatCurrency(currentData.gym)}
+              <span className={styles.usdRef}>{formatCurrency(currentData.gym, 'USD')}</span>
+            </span>
           </div>
           <div className={styles.costItem}>
             <span className={styles.itemName}>{t.transport}</span>
-            <span className={styles.itemValue}>{formatCurrency(currentData.transport)}</span>
+            <span className={styles.itemValue}>
+              {formatCurrency(currentData.transport)}
+              <span className={styles.usdRef}>{formatCurrency(currentData.transport, 'USD')}</span>
+            </span>
           </div>
         </div>
       </div>
 
       <div className={styles.totalCard}>
         <div className={styles.totalLabel}>{t.monthlyTotal}</div>
-        <div className={styles.totalValue}>{formatCurrency(totalMonthly)}</div>
-        <p className={styles.rangeText}>* {t.estimatedRange} (VND)</p>
+        <div className={styles.totalValue}>
+          {formatCurrency(totalMonthly)}
+          <span className={styles.usdTotal}>≈ {formatCurrency(totalMonthly, 'USD')}</span>
+        </div>
+        <p className={styles.rangeText}>* {t.estimatedRange} (VND) - $1 ≈ {formatCurrency(EXCHANGE_RATE)}</p>
       </div>
     </div>
   );

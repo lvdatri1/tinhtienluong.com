@@ -92,6 +92,16 @@
   font-weight: 600;
   color: #fff;
   transition: color 0.3s;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.usdRef {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  font-weight: 400;
+  opacity: 0.8;
 }
 
 .itemValue.selected {
@@ -133,25 +143,33 @@
 }
 
 .totalCard {
-  padding: 2rem;
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(6, 182, 212, 0.1));
-  border-radius: 12px;
-  border: 1px solid var(--primary);
+  background: rgba(var(--primary-rgb), 0.15);
+  border: 1px solid rgba(var(--primary-rgb), 0.3);
+  padding: 1.5rem;
+  border-radius: 16px;
   text-align: center;
   margin-top: 2rem;
 }
 
 .totalLabel {
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: var(--primary);
+  font-size: 1rem;
+  color: var(--text-secondary);
   margin-bottom: 0.5rem;
 }
 
 .totalValue {
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 800;
-  color: #fff;
+  color: var(--primary);
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.usdTotal {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  font-weight: 500;
 }
 
 .rangeText {
