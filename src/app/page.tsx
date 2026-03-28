@@ -5,12 +5,13 @@ import Calculator from '@/components/Calculator';
 import BenefitCalculator from '@/components/BenefitCalculator';
 import LivingCostCalculator from '@/components/LivingCostCalculator';
 import MortgageCalculator from '@/components/MortgageCalculator';
+import SIPayoutCalculator from '@/components/SIPayoutCalculator';
 import styles from './page.module.css';
 import en from '../locales/en.json';
 import vi from '../locales/vi.json';
 
 export default function Home() {
-  const [activeTab, setActiveTab] = useState<'pit' | 'benefits' | 'cost' | 'mortgage'>('pit');
+  const [activeTab, setActiveTab] = useState<'pit' | 'benefits' | 'cost' | 'mortgage' | 'si-payout'>('pit');
   const [lang, setLang] = useState<'en' | 'vi'>('en');
   const t: any = lang === 'en' ? en : vi;
 
@@ -55,6 +56,12 @@ export default function Home() {
             {t.benefitsTab}
           </button>
           <button 
+            className={`${styles.tabBtn} ${activeTab === 'si-payout' ? styles.active : ''}`}
+            onClick={() => setActiveTab('si-payout')}
+          >
+            {t.bhxhOneTimeTab}
+          </button>
+          <button 
             className={`${styles.tabBtn} ${activeTab === 'cost' ? styles.active : ''}`}
             onClick={() => setActiveTab('cost')}
           >
@@ -70,6 +77,7 @@ export default function Home() {
 
         {activeTab === 'pit' && <Calculator initialLang={lang} />}
         {activeTab === 'benefits' && <BenefitCalculator lang={lang} />}
+        {activeTab === 'si-payout' && <SIPayoutCalculator lang={lang} />}
         {activeTab === 'cost' && <LivingCostCalculator lang={lang} />}
         {activeTab === 'mortgage' && <MortgageCalculator lang={lang} />}
 
