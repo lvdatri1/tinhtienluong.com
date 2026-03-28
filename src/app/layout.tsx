@@ -3,13 +3,13 @@ import './globals.css';
 import Script from 'next/script';
 
 export const metadata: Metadata = {
-  title: 'Vietnam Salary Calculator | Tinh Tien Luong',
-  description: 'Free, highly accurate Vietnam Salary Calculator for 2024. Calculate gross to net income, PIT, Social Insurance, Health Insurance for Expats and Locals in VND, USD dynamically.',
-  keywords: ['Vietnam Salary Calculator', 'Vietnam Net Income', 'Vietnam Income Tax Calculator', 'Tinh Tien Luong', 'Vietnam Expat Tax', 'Vietnam PIT 2024'],
+  title: 'Tính Lương Gross Sang Net & Công Cụ Tài Chính Việt Nam 2025',
+  description: 'Công cụ tính lương Gross sang Net chuẩn xác nhất Việt Nam 2025. Tính Thuế TNCN, BHXH, Chi phí sinh hoạt và Lãi suất vay ngân hàng.',
+  keywords: ['Tính Lương Gross Sang Net', 'Lương Net', 'Tính Thuế TNCN', 'Tinh Tien Luong', 'BHXH 2025', 'Lãi suất ngân hàng'],
   authors: [{ name: 'Tinh Tien Luong' }],
   openGraph: {
-    title: 'Vietnam Salary Calculator - Gross to Net',
-    description: 'Instantly calculate your Vietnam net income from your gross salary. Supports Monthly, Annually, Fortnightly across VND and USD. Works offline and is insanely fast.',
+    title: 'Tính Lương Gross Sang Net & Công Cụ Tài Chính',
+    description: 'Tính toán chính xác lương thực nhận, bảo hiểm và kế hoạch tài chính tại Việt Nam. Cập nhật quy định mới nhất 2024-2025.',
     url: 'https://tinhtienluong.com',
     siteName: 'Tinh Tien Luong',
     type: 'website'
@@ -25,7 +25,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="vi">
       <head>
         <Script id="gtm-script" strategy="afterInteractive">
           {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':

@@ -12,7 +12,7 @@ import vi from '../locales/vi.json';
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<'pit' | 'benefits' | 'cost' | 'mortgage' | 'si-payout'>('pit');
-  const [lang, setLang] = useState<'en' | 'vi'>('en');
+  const [lang, setLang] = useState<'en' | 'vi'>('vi');
   const t: any = lang === 'en' ? en : vi;
 
   useEffect(() => {

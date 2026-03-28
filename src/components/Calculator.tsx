@@ -12,7 +12,7 @@ interface CalculatorProps {
   initialLang?: 'en' | 'vi';
 }
 
-export default function Calculator({ initialLang = 'en' }: CalculatorProps) {
+export default function Calculator({ initialLang = 'vi' }: CalculatorProps) {
   const [lang, setLang] = useState<'en' | 'vi'>(initialLang);
   const t: any = lang === 'en' ? en : vi;
 
