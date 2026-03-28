@@ -3,12 +3,13 @@
 import React, { useState } from 'react';
 import Calculator from '@/components/Calculator';
 import BenefitCalculator from '@/components/BenefitCalculator';
+import LivingCostCalculator from '@/components/LivingCostCalculator';
 import styles from './page.module.css';
 import en from '../locales/en.json';
 import vi from '../locales/vi.json';
 
 export default function Home() {
-  const [activeTab, setActiveTab] = useState<'pit' | 'benefits'>('pit');
+  const [activeTab, setActiveTab] = useState<'pit' | 'benefits' | 'cost'>('pit');
   const [lang, setLang] = useState<'en' | 'vi'>('en');
   const t: any = lang === 'en' ? en : vi;
 
@@ -43,9 +44,17 @@ export default function Home() {
           >
             {t.benefitsTab}
           </button>
+          <button 
+            className={`${styles.tabBtn} ${activeTab === 'cost' ? styles.active : ''}`}
+            onClick={() => setActiveTab('cost')}
+          >
+            {t.livingCostTab}
+          </button>
         </div>
 
-        {activeTab === 'pit' ? <Calculator initialLang={lang} /> : <BenefitCalculator lang={lang} />}
+        {activeTab === 'pit' && <Calculator initialLang={lang} />}
+        {activeTab === 'benefits' && <BenefitCalculator lang={lang} />}
+        {activeTab === 'cost' && <LivingCostCalculator lang={lang} />}
       </div>
 
       <section className={styles.seoContent}>
