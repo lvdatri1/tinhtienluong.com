@@ -4,21 +4,30 @@ import React, { useState } from 'react';
 import Calculator from '@/components/Calculator';
 import BenefitCalculator from '@/components/BenefitCalculator';
 import styles from './page.module.css';
+import en from '../locales/en.json';
+import vi from '../locales/vi.json';
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<'pit' | 'benefits'>('pit');
   const [lang, setLang] = useState<'en' | 'vi'>('en');
+  const t: any = lang === 'en' ? en : vi;
 
   return (
     <main className={styles.main}>
       <div className={styles.content}>
         <div className={styles.header}>
-          <h1 className={styles.logo}>Tính Tiền Lương</h1>
-          <p className={styles.description}>
-            {lang === 'en' 
-              ? 'The smartest way to calculate your Vietnam Net Income and Social Benefits.' 
-              : 'Công cụ tính lương và các chế độ bảo hiểm thông minh nhất.'}
-          </p>
+          <div className={styles.langToggle}>
+             <button 
+              className={`${styles.toggleBtn} ${lang === 'en' ? styles.active : ''}`}
+              onClick={() => setLang('en')}
+            >ENG</button>
+            <button 
+              className={`${styles.toggleBtn} ${lang === 'vi' ? styles.active : ''}`}
+              onClick={() => setLang('vi')}
+            >VIE</button>
+          </div>
+          <h1 className={styles.logo}>{t.title}</h1>
+          <p className={styles.description}>{t.subtitle}</p>
         </div>
 
         <div className={styles.mainTabs}>
@@ -26,31 +35,29 @@ export default function Home() {
             className={`${styles.tabBtn} ${activeTab === 'pit' ? styles.active : ''}`}
             onClick={() => setActiveTab('pit')}
           >
-            {lang === 'en' ? 'Salary / PIT' : 'Lương / Thuế TNCN'}
+            {t.salaryTab}
           </button>
           <button 
             className={`${styles.tabBtn} ${activeTab === 'benefits' ? styles.active : ''}`}
             onClick={() => setActiveTab('benefits')}
           >
-            {lang === 'en' ? 'Social Insurance Benefits' : 'Các Chế Độ Bảo Hiểm'}
+            {t.benefitsTab}
           </button>
         </div>
 
-        {activeTab === 'pit' ? <Calculator /> : <BenefitCalculator lang={lang} />}
+        {activeTab === 'pit' ? <Calculator initialLang={lang} /> : <BenefitCalculator lang={lang} />}
       </div>
 
       <section className={styles.seoContent}>
-        <h2>About Vietnam Personal Income Tax 2024</h2>
-        <p>
-          The <strong>Vietnam Salary Calculator (Tinh Tien Luong)</strong> helps expats and local residents securely estimate their net income without any data leaving your device. It accurately evaluates modern progressive tax brackets (from 5% to 35%), compulsory insurance deductions like Social Insurance (8%), Health Insurance (1.5%), and Unemployment Insurance (1%), alongside base deductions like the 11M VND personal allowance. Calculate your USD or VND gross salary instantly across monthly, fortnightly, or annual tracking periods.
-        </p>
+        <h2>{t.seoTitle}</h2>
+        <p>{t.seoDescription}</p>
         <div style={{ marginTop: '1.5rem' }}>
-          <a href="/faq" style={{ color: 'var(--primary)', fontWeight: '600', textDecoration: 'none' }}>Learn more in our FAQ →</a>
+          <a href="/faq" style={{ color: 'var(--primary)', fontWeight: '600', textDecoration: 'none' }}>{t.learnMoreFaq} →</a>
         </div>
       </section>
 
       <footer className={styles.footer}>
-        <p>&copy; {new Date().getFullYear()} Tinh Tien Luong. Built with statically exported Next.js + Vanilla CSS.</p>
+        <p>&copy; {new Date().getFullYear()} Tinh Tien Luong. {t.footerCredit}</p>
       </footer>
     </main>
   );

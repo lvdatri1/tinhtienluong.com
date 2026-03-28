@@ -59,5 +59,11 @@
   "q5": "What is the Funeral Allowance?",
   "a5": "If an SI participant dies, their family receives 10 times the current base salary for funeral expenses (approx 23.4M VND in 2024).",
   "q6": "How long is Unemployment Payout?",
-  "a6": "3 months for the first 12-36 months of payment, then 1 extra month for every additional 12 months with a maximum of 12 months total."
+  "a6": "3 months for the first 12-36 months of payment, then 1 extra month for every additional 12 months with a maximum of 12 months total.",
+  "seoTitle": "About Vietnam Personal Income Tax 2024",
+  "seoDescription": "The Vietnam Salary Calculator (Tinh Tien Luong) helps expats and local residents securely estimate their net income without any data leaving your device. It accurately evaluates modern progressive tax brackets (from 5% to 35%), compulsory insurance deductions like Social Insurance (8%), Health Insurance (1.5%), and Unemployment Insurance (1%), alongside base deductions like the 11M VND personal allowance. Calculate your USD or VND gross salary instantly across monthly, fortnightly, or annual tracking periods.",
+  "learnMoreFaq": "Learn more in our FAQ",
+  "footerCredit": "Built with statically exported Next.js + Vanilla CSS.",
+  "salaryTab": "Salary / PIT",
+  "benefitsTab": "Social Insurance Benefits"
 }

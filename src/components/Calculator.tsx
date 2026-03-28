@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './Calculator.module.css';
 import { calculateNetIncome, TaxResult } from '../utils/taxCalculation';
 import en from '../locales/en.json';
@@ -8,9 +8,18 @@ import vi from '../locales/vi.json';
 import { PieChart, Pie, Cell, Tooltip as RechartsTooltip, Legend, ResponsiveContainer } from 'recharts';
 import InfoTooltip from './Tooltip';
 
-export default function Calculator() {
-  const [lang, setLang] = useState<'en' | 'vi'>('en');
+interface CalculatorProps {
+  initialLang?: 'en' | 'vi';
+}
+
+export default function Calculator({ initialLang = 'en' }: CalculatorProps) {
+  const [lang, setLang] = useState<'en' | 'vi'>(initialLang);
   const t: any = lang === 'en' ? en : vi;
+
+  // Sync lang if initialLang changes
+  useEffect(() => {
+    setLang(initialLang);
+  }, [initialLang]);
 
   const [grossSalary, setGrossSalary] = useState<string>('30000000');
   const [dependents, setDependents] = useState<number>(0);

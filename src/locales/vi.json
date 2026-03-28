@@ -59,5 +59,11 @@
   "q5": "Trợ cấp mai táng là bao nhiêu?",
   "a5": "Nếu người đóng BHXH qua đời, thân nhân được nhận trợ cấp mai táng bằng 10 lần mức lương cơ sở (khoảng 23.4tr VNĐ năm 2024).",
   "q6": "Thời gian hưởng BHTN là bao lâu?",
-  "a6": "Đóng đủ 12-36 tháng được hưởng 03 tháng trợ cấp, sau đó cứ thêm 12 tháng đóng được hưởng thêm 01 tháng trợ cấp, tối đa 12 tháng."
+  "a6": "Đóng đủ 12-36 tháng được hưởng 03 tháng trợ cấp, sau đó cứ thêm 12 tháng đóng được hưởng thêm 01 tháng trợ cấp, tối đa 12 tháng.",
+  "seoTitle": "Về Thuế thu nhập cá nhân Việt Nam 2024",
+  "seoDescription": "Công cụ Tính Lương Việt Nam (Tính Tiền Lương) giúp người nước ngoài và cư dân trong nước ước tính thu nhập thực nhận một cách an toàn nhất. Công cụ này tính toán chính xác các bậc thuế lũy tiến (từ 5% đến 35%), các khoản bảo hiểm bắt buộc như Bảo hiểm xã hội (8%), Bảo hiểm y tế (1,5%) và Bảo hiểm thất nghiệp (1%), cùng với các khoản giảm trừ như giảm trừ gia cảnh bản thân 11 triệu VNĐ. Tính lương Gross sang Net cho cả VNĐ và USD theo tháng hoặc theo năm một cách nhanh chóng.",
+  "learnMoreFaq": "Tìm hiểu thêm trong phần Hỏi đáp (FAQ)",
+  "footerCredit": "Xây dựng bằng Next.js (Static Export) + Vanilla CSS.",
+  "salaryTab": "Lương / Thuế TNCN",
+  "benefitsTab": "Các Chế Độ Bảo Hiểm"
 }
