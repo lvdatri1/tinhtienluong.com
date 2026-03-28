@@ -32,12 +32,28 @@ const CITY_DATA: Record<string, CostData> = {
     utilities: 2200000
   },
   danang: {
-    rentCenter: 9000000,
+    rentCenter: 9500000,
     rentOutside: 5500000,
     meal: 45000,
     coffee: 35000,
-    gym: 500000,
+    gym: 550000,
     utilities: 1800000
+  },
+  haiphong: {
+    rentCenter: 10000000,
+    rentOutside: 6000000,
+    meal: 50000,
+    coffee: 45000,
+    gym: 600000,
+    utilities: 2000000
+  },
+  cantho: {
+    rentCenter: 7500000,
+    rentOutside: 4500000,
+    meal: 40000,
+    coffee: 30000,
+    gym: 450000,
+    utilities: 1600000
   }
 };
 
@@ -104,6 +120,8 @@ export default function LivingCostCalculator({ lang }: LivingCostProps) {
             <option value="hcmc">Ho Chi Minh City</option>
             <option value="hanoi">Hanoi</option>
             <option value="danang">Da Nang</option>
+            <option value="haiphong">Haiphong</option>
+            <option value="cantho">Can Tho</option>
           </select>
         </div>
 
