@@ -14,46 +14,46 @@ interface CostData {
   utilities: number;
 }
 
-const CITY_DATA: Record<string, CostData> = {
+const CITY_DATA: Record<string, any> = {
   hcmc: {
-    rentCenter: 16000000,
-    rentOutside: 8500000,
-    meal: 65000,
-    coffee: 55000,
-    gym: 800000,
-    utilities: 2500000
+    rentCenter: { local: 10000000, mid: 18000000, premium: 30000000 },
+    rentOutside: { local: 5500000, mid: 10000000, premium: 18000000 },
+    meal: { local: 35000, mid: 65000, premium: 180000 },
+    coffee: { local: 20000, mid: 45000, premium: 85000 },
+    gym: { local: 350000, mid: 800000, premium: 2000000 },
+    utilities: { local: 1500000, mid: 2500000, premium: 4500000 }
   },
   hanoi: {
-    rentCenter: 14000000,
-    rentOutside: 7500000,
-    meal: 55000,
-    coffee: 50000,
-    gym: 700000,
-    utilities: 2200000
+    rentCenter: { local: 9000000, mid: 16000000, premium: 26000000 },
+    rentOutside: { local: 5000000, mid: 9000000, premium: 15000000 },
+    meal: { local: 35000, mid: 55000, premium: 150000 },
+    coffee: { local: 18000, mid: 40000, premium: 75000 },
+    gym: { local: 300000, mid: 700000, premium: 1800000 },
+    utilities: { local: 1200000, mid: 2200000, premium: 3800000 }
   },
   danang: {
-    rentCenter: 9500000,
-    rentOutside: 5500000,
-    meal: 45000,
-    coffee: 35000,
-    gym: 550000,
-    utilities: 1800000
+    rentCenter: { local: 6500000, mid: 10000000, premium: 18000000 },
+    rentOutside: { local: 4000000, mid: 6500000, premium: 10000000 },
+    meal: { local: 30000, mid: 45000, premium: 100000 },
+    coffee: { local: 15000, mid: 35000, premium: 65000 },
+    gym: { local: 250000, mid: 550000, premium: 1200000 },
+    utilities: { local: 1000000, mid: 1800000, premium: 2800000 }
   },
   haiphong: {
-    rentCenter: 10000000,
-    rentOutside: 6000000,
-    meal: 50000,
-    coffee: 45000,
-    gym: 600000,
-    utilities: 2000000
+    rentCenter: { local: 7500000, mid: 12000000, premium: 20000000 },
+    rentOutside: { local: 4000000, mid: 7000000, premium: 12000000 },
+    meal: { local: 35000, mid: 50000, premium: 120000 },
+    coffee: { local: 18000, mid: 40000, premium: 70000 },
+    gym: { local: 280000, mid: 600000, premium: 1500000 },
+    utilities: { local: 1100000, mid: 2000000, premium: 3200000 }
   },
   cantho: {
-    rentCenter: 7500000,
-    rentOutside: 4500000,
-    meal: 40000,
-    coffee: 30000,
-    gym: 450000,
-    utilities: 1600000
+    rentCenter: { local: 5000000, mid: 8000000, premium: 14000000 },
+    rentOutside: { local: 3000000, mid: 5000000, premium: 9000000 },
+    meal: { local: 25000, mid: 40000, premium: 100000 },
+    coffee: { local: 15000, mid: 30000, premium: 60000 },
+    gym: { local: 200000, mid: 450000, premium: 1000000 },
+    utilities: { local: 900000, mid: 1600000, premium: 2500000 }
   }
 };
 
@@ -63,27 +63,21 @@ interface LivingCostProps {
 
 export default function LivingCostCalculator({ lang }: LivingCostProps) {
   const t: any = lang === 'en' ? en : vi;
-  const [city, setCity] = useState<'hcmc' | 'hanoi' | 'danang'>('hcmc');
+  const [city, setCity] = useState<'hcmc' | 'hanoi' | 'danang' | 'haiphong' | 'cantho'>('hcmc');
   const [lifestyle, setLifestyle] = useState<'local' | 'mid' | 'premium'>('mid');
-
-  const lifestyleMultiplier = {
-    local: 0.7,
-    mid: 1,
-    premium: 1.5
-  };
 
   const currentData = useMemo(() => {
     const base = CITY_DATA[city];
-    const mult = lifestyleMultiplier[lifestyle];
+    const ls = lifestyle;
     
     return {
-      rentCenter: Math.round(base.rentCenter * mult),
-      rentOutside: Math.round(base.rentOutside * mult),
-      meal: Math.round(base.meal * mult),
-      coffee: Math.round(base.coffee * mult),
-      gym: Math.round(base.gym * mult),
-      utilities: Math.round(base.utilities * mult),
-      transport: Math.round(1500000 * mult) // Grab/Bike avg
+      rentCenter: base.rentCenter[ls],
+      rentOutside: base.rentOutside[ls],
+      meal: base.meal[ls],
+      coffee: base.coffee[ls],
+      gym: base.gym[ls],
+      utilities: base.utilities[ls],
+      transport: ls === 'local' ? 800000 : ls === 'mid' ? 1500000 : 3500000
     };
   }, [city, lifestyle]);
 
