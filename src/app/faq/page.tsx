@@ -45,8 +45,18 @@ export default function FAQPage() {
             </div>
 
             <div className={styles.faqItem}>
-              <h2 className={styles.question}>{t.q3}</h2>
-              <p className={styles.answer}>{t.a3}</p>
+              <h2 className={styles.question}>{t.q4}</h2>
+              <p className={styles.answer}>{t.a4}</p>
+            </div>
+
+            <div className={styles.faqItem}>
+              <h2 className={styles.question}>{t.q5}</h2>
+              <p className={styles.answer}>{t.a5}</p>
+            </div>
+
+            <div className={styles.faqItem}>
+              <h2 className={styles.question}>{t.q6}</h2>
+              <p className={styles.answer}>{t.a6}</p>
             </div>
           </div>
         </div>

@@ -1,19 +1,42 @@
-import React from 'react';
-import Calculator from '../components/Calculator';
+'use client';
+
+import React, { useState } from 'react';
+import Calculator from '@/components/Calculator';
+import BenefitCalculator from '@/components/BenefitCalculator';
 import styles from './page.module.css';
 
 export default function Home() {
+  const [activeTab, setActiveTab] = useState<'pit' | 'benefits'>('pit');
+  const [lang, setLang] = useState<'en' | 'vi'>('en');
+
   return (
     <main className={styles.main}>
       <div className={styles.content}>
         <div className={styles.header}>
           <h1 className={styles.logo}>Tính Tiền Lương</h1>
           <p className={styles.description}>
-            The smartest way to calculate your Vietnam Net Income.
+            {lang === 'en' 
+              ? 'The smartest way to calculate your Vietnam Net Income and Social Benefits.' 
+              : 'Công cụ tính lương và các chế độ bảo hiểm thông minh nhất.'}
           </p>
         </div>
-        
-        <Calculator />
+
+        <div className={styles.mainTabs}>
+          <button 
+            className={`${styles.tabBtn} ${activeTab === 'pit' ? styles.active : ''}`}
+            onClick={() => setActiveTab('pit')}
+          >
+            {lang === 'en' ? 'Salary / PIT' : 'Lương / Thuế TNCN'}
+          </button>
+          <button 
+            className={`${styles.tabBtn} ${activeTab === 'benefits' ? styles.active : ''}`}
+            onClick={() => setActiveTab('benefits')}
+          >
+            {lang === 'en' ? 'Social Insurance Benefits' : 'Các Chế Độ Bảo Hiểm'}
+          </button>
+        </div>
+
+        {activeTab === 'pit' ? <Calculator /> : <BenefitCalculator lang={lang} />}
       </div>
 
       <section className={styles.seoContent}>
