@@ -32,45 +32,45 @@ export default function Calculator({ initialLang = 'en' }: CalculatorProps) {
 
   const handleCalculate = (e: React.FormEvent) => {
     e.preventDefault();
-    const parsedGross = parseFloat(grossSalary.replace(/,/g, ''));
-    const parsedRate = parseFloat(exchangeRate.replace(/,/g, ''));
+    const parsedGross = parseFloat(grossSalary.replace(/[^0-9.]/g, '')); // Strips thousand sep, keeps decimal if present
+    // Since we now use locale-aware formatting, let's just strip everything non-numeric except the decimal point if it exists
+    // But for now, we'll just strip all non-digits to be safe with toLocaleString results
+    const cleanGross = parseFloat(grossSalary.replace(/[^0-9]/g, ''));
+    const cleanRate = parseFloat(exchangeRate.replace(/[^0-9]/g, ''));
 
-    if (isNaN(parsedGross) || isNaN(parsedRate) || parsedGross <= 0 || parsedRate <= 0) return;
+
+    if (isNaN(cleanGross) || isNaN(cleanRate) || cleanGross <= 0 || cleanRate <= 0) return;
 
     const res = calculateNetIncome({
-      grossSalary: parsedGross,
+      grossSalary: cleanGross,
       dependents,
       isExpat,
       currency,
-      exchangeRate: parsedRate,
+      exchangeRate: cleanRate,
       period
     });
 
     setResult(res);
   };
 
+  const formatNumber = (value: string) => {
+    const numeric = value.replace(/[^0-9]/g, '');
+    if (numeric === '') return '';
+    return parseInt(numeric, 10).toLocaleString(lang === 'en' ? 'en-US' : 'vi-VN');
+  };
+
   const handleGrossChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let val = e.target.value.replace(/,/g, '');
-    if (val === '') {
-      setGrossSalary('');
-      return;
-    }
-    if (!isNaN(Number(val))) {
-      if (val.endsWith('.')) {
-        setGrossSalary(val);
-      } else {
-        const parts = val.split('.');
-        if (parts.length > 2) return;
-        parts[0] = parseInt(parts[0], 10).toLocaleString('en-US');
-        setGrossSalary(parts.join('.'));
-      }
-    }
+    setGrossSalary(formatNumber(e.target.value));
+  };
+
+  const handleExchangeRateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setExchangeRate(formatNumber(e.target.value));
   };
 
   const handlePeriodChange = (newPeriod: 'monthly' | 'annually' | 'fortnightly') => {
     if (period === newPeriod) return;
     
-    const rawGross = parseFloat(grossSalary.replace(/,/g, ''));
+    const rawGross = parseFloat(grossSalary.replace(/[^0-9]/g, ''));
     if (!isNaN(rawGross) && rawGross > 0) {
       let annualGross = rawGross;
       if (period === 'monthly') annualGross = rawGross * 12;
@@ -86,7 +86,7 @@ export default function Calculator({ initialLang = 'en' }: CalculatorProps) {
       setGrossSalary(parts.join('.'));
 
       if (result) {
-        const parsedRate = parseFloat(exchangeRate.replace(/,/g, ''));
+        const parsedRate = parseFloat(exchangeRate.replace(/[^0-9]/g, ''));
         if (!isNaN(parsedRate) && parsedRate > 0) {
           setResult(calculateNetIncome({
             grossSalary: newGross,
@@ -241,12 +241,12 @@ export default function Calculator({ initialLang = 'en' }: CalculatorProps) {
           <div className={styles.inputGroup}>
              <label className={styles.label}>{t.exchangeRate}</label>
              <input 
-               type="number" 
+               type="text" 
+               inputMode="numeric"
                className={styles.input} 
                value={exchangeRate}
-               onChange={(e) => setExchangeRate(e.target.value)}
+               onChange={handleExchangeRateChange}
                required
-               min="0"
              />
           </div>
 

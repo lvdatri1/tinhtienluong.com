@@ -32,14 +32,14 @@ export default function BenefitCalculator({ lang }: BenefitProps) {
   useEffect(() => {
     if (mode === 'unemployment') {
       const res = calculateUnemploymentBenefit(
-        parseFloat(avgSalary.replace(/,/g, '')) || 0,
+        parseFloat(avgSalary.replace(/[^0-9]/g, '')) || 0,
         contributionYears * 12,
         region
       );
       setUnemploymentResult(res);
     } else {
       const res = calculateDeathSupport(
-        parseFloat(avgSalary.replace(/,/g, '')) || 0,
+        parseFloat(avgSalary.replace(/[^0-9]/g, '')) || 0,
         hasUnskilled,
         contributionYears, // Simplified post-2014 assumed
         0
@@ -76,7 +76,11 @@ export default function BenefitCalculator({ lang }: BenefitProps) {
             type="text"
             className={styles.input}
             value={avgSalary}
-            onChange={(e) => setAvgSalary(e.target.value.replace(/[^0-9]/g, ''))}
+            onChange={(e) => {
+              const numeric = e.target.value.replace(/[^0-9]/g, '');
+              if (numeric === '') setAvgSalary('');
+              else setAvgSalary(parseInt(numeric, 10).toLocaleString(lang === 'en' ? 'en-US' : 'vi-VN'));
+            }}
           />
         </div>
 
