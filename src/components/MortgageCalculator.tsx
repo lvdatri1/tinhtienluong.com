@@ -187,6 +187,12 @@ export default function MortgageCalculator({ lang }: MortgageProps) {
           <div className={styles.summaryLabel}>{t.totalPayment}</div>
           <div className={styles.summaryValue}>{formatCurrency(summary.totalPayment)}</div>
         </div>
+
+        <div className={`${styles.printContainer} no-print`}>
+          <button className={styles.printBtn} onClick={() => window.print()}>
+            🖨️ {t.printReport}
+          </button>
+        </div>
       </div>
 
       <h3 className={styles.title} style={{ fontSize: '1.4rem' }}>{t.amortizationSchedule}</h3>

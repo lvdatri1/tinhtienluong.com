@@ -115,3 +115,33 @@
     padding: 1.5rem;
   }
 }
+
+.printContainer {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  border-top: 1px solid var(--surface-border);
+  padding-top: 1.5rem;
+}
+
+.printBtn {
+  background: var(--primary);
+  color: white;
+  padding: 0.75rem 1.75rem;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(var(--primary-rgb), 0.3);
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: none !important;
+}
+
+.printBtn:hover {
+  background: var(--primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(var(--primary-rgb), 0.4);
+}

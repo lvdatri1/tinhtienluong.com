@@ -244,6 +244,12 @@ export default function BenefitCalculator({ lang }: BenefitProps) {
              </div>
            </div>
          )}
+
+        <div className={`${styles.printContainer} no-print`}>
+          <button className={styles.printBtn} onClick={() => window.print()}>
+            🖨️ {t.printReport}
+          </button>
+        </div>
        </div>
     </div>
   );

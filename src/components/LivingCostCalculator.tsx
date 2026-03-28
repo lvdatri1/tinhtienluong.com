@@ -4,6 +4,16 @@ import React, { useState, useMemo } from 'react';
 import styles from './LivingCostCalculator.module.css';
 import en from '../locales/en.json';
 import vi from '../locales/vi.json';
+import { 
+  BarChart, 
+  Bar, 
+  XAxis, 
+  YAxis, 
+  CartesianGrid, 
+  Tooltip as RechartsTooltip, 
+  ResponsiveContainer, 
+  Cell 
+} from 'recharts';
 
 interface CostData {
   rentCenter: number;
@@ -128,6 +138,37 @@ export default function LivingCostCalculator({ lang }: LivingCostProps) {
     
     return Math.round(currentData.rent + monthlyFood + monthlyCoffee + monthlyUtilities + monthlyTransport + monthlyGym);
   }, [currentData, householdSize]);
+
+  const comparativeData = useMemo(() => {
+    const size = householdSize;
+    const ls = lifestyle;
+    const sizeMultUtilities = size === 1 ? 1 : size === 2 ? 1.5 : 2.2;
+    const sizeMultLinear = size === 1 ? 1 : size === 2 ? 2 : 3.5;
+
+    // Calculate Average
+    const cities = Object.keys(CITY_DATA);
+    let avgTotal = 0;
+    cities.forEach(c => {
+      const data = CITY_DATA[c];
+      const rent = Math.round((housingType === 'room' ? data.room[ls] : housingType === 'studio' ? data.studio[ls] : data.apartment[ls]) * (rentLocation === 'outskirts' ? 0.7 : 1));
+      const transport = ls === 'local' ? 800000 : ls === 'mid' ? 1500000 : 3500000;
+      
+      const monFood = data.meal[ls] * 3 * 30 * sizeMultLinear;
+      const monCoffee = data.coffee[ls] * 30 * sizeMultLinear;
+      const monUtil = data.utilities[ls] * sizeMultUtilities;
+      const monTrans = transport * sizeMultLinear;
+      const monGym = data.gym[ls] * sizeMultLinear;
+      
+      avgTotal += (rent + monFood + monCoffee + monUtil + monTrans + monGym);
+    });
+    
+    const nationalAvg = Math.round(avgTotal / cities.length);
+
+    return [
+      { name: t.nationalAvg, value: nationalAvg, fill: 'rgba(255, 255, 255, 0.2)' },
+      { name: t.selectedCity, value: totalMonthly, fill: 'var(--primary)' }
+    ];
+  }, [totalMonthly, householdSize, lifestyle, housingType, rentLocation, t]);
 
   const formatCurrency = (amount: number, currency: 'VND' | 'USD' = 'VND') => {
     if (currency === 'USD') {
@@ -296,6 +337,40 @@ export default function LivingCostCalculator({ lang }: LivingCostProps) {
           <span className={styles.usdTotal}>≈ {formatCurrency(totalMonthly, 'USD')}</span>
         </div>
         <p className={styles.rangeText}>* {t.estimatedRange} (VND) - $1 ≈ {formatCurrency(EXCHANGE_RATE)}</p>
+      </div>
+
+      <div className={`${styles.chartSection} no-print`}>
+        <h3 className={styles.chartTitle}>{t.comparativeTitle}</h3>
+        <div style={{ width: '100%', height: 250 }}>
+          <ResponsiveContainer>
+            <BarChart data={comparativeData} layout="vertical" margin={{ left: 20, right: 40 }}>
+              <XAxis type="number" hide />
+              <YAxis 
+                dataKey="name" 
+                type="category" 
+                width={lang === 'en' ? 100 : 120}
+                stroke="var(--text-secondary)"
+                fontSize={12}
+              />
+              <RechartsTooltip 
+                cursor={{ fill: 'rgba(255,255,255,0.05)' }}
+                contentStyle={{ background: '#1e293b', border: '1px solid var(--surface-border)', borderRadius: '8px' }}
+                formatter={(val: any) => val ? [formatCurrency(Number(val)), ''] : ['', '']}
+              />
+              <Bar dataKey="value" radius={[0, 4, 4, 0]} barSize={30}>
+                {comparativeData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={entry.fill} />
+                ))}
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
+
+      <div className={`${styles.printContainer} no-print`}>
+        <button className={styles.printBtn} onClick={() => window.print()}>
+          🖨️ {t.printReport}
+        </button>
       </div>
     </div>
   );

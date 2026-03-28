@@ -9,6 +9,7 @@ import {
   SIPayoutResult, 
   SIPeriod 
 } from '../utils/siPayoutCalculation';
+import LawUpdateNotice from './LawUpdateNotice';
 
 interface SIPayoutProps {
   lang: 'en' | 'vi';
@@ -69,6 +70,7 @@ export default function SIPayoutCalculator({ lang }: SIPayoutProps) {
 
   return (
     <div className={`${styles.container} glass-panel`}>
+      <LawUpdateNotice lang={lang} />
       <h2 className={styles.title}>{t.bhxhOneTimeTitle}</h2>
       <p className={styles.subtitle}>{t.bhxhOneTimeSubtitle}</p>
 
@@ -196,6 +198,12 @@ export default function SIPayoutCalculator({ lang }: SIPayoutProps) {
           <div className={styles.totalPayoutRow}>
             <span>{t.totalMoneyReceived}</span>
             <span className={styles.totalValue}>{formatCurrency(result.totalPayout)}</span>
+          </div>
+
+          <div className={`${styles.printContainer} no-print`}>
+            <button className={styles.printBtn} onClick={() => window.print()}>
+              🖨️ {t.printReport}
+            </button>
           </div>
 
           <p className={styles.disclaimer}>* {t.roundingNotice}</p>
