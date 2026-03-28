@@ -59,6 +59,24 @@ const CITY_DATA: Record<string, any> = {
     coffee: { local: 15000, mid: 30000, premium: 60000 },
     gym: { local: 200000, mid: 450000, premium: 1000000 },
     utilities: { local: 700000, mid: 1400000, premium: 2200000 }
+  },
+  vungtau: {
+    room: { local: 2800000, mid: 4500000, premium: 7500000 },
+    studio: { local: 5500000, mid: 9500000, premium: 16000000 },
+    apartment: { local: 11000000, mid: 19000000, premium: 35000000 },
+    meal: { local: 35000, mid: 55000, premium: 130000 },
+    coffee: { local: 20000, mid: 40000, premium: 70000 },
+    gym: { local: 300000, mid: 650000, premium: 1500000 },
+    utilities: { local: 850000, mid: 1600000, premium: 2800000 }
+  },
+  nhatrang: {
+    room: { local: 2500000, mid: 4200000, premium: 7000000 },
+    studio: { local: 5000000, mid: 9000000, premium: 15000000 },
+    apartment: { local: 10000000, mid: 18000000, premium: 32000000 },
+    meal: { local: 30000, mid: 50000, premium: 120000 },
+    coffee: { local: 18000, mid: 35000, premium: 65000 },
+    gym: { local: 280000, mid: 600000, premium: 1300000 },
+    utilities: { local: 800000, mid: 1500000, premium: 2500000 }
   }
 };
 
@@ -68,7 +86,7 @@ interface LivingCostProps {
 
 export default function LivingCostCalculator({ lang }: LivingCostProps) {
   const t: any = lang === 'en' ? en : vi;
-  const [city, setCity] = useState<'hcmc' | 'hanoi' | 'danang' | 'haiphong' | 'cantho'>('hcmc');
+  const [city, setCity] = useState<'hcmc' | 'hanoi' | 'danang' | 'haiphong' | 'cantho' | 'vungtau' | 'nhatrang'>('hcmc');
   const [lifestyle, setLifestyle] = useState<'local' | 'mid' | 'premium'>('mid');
   const [rentLocation, setRentLocation] = useState<'center' | 'outskirts'>('center');
   const [householdSize, setHouseholdSize] = useState<number>(1);
@@ -135,6 +153,8 @@ export default function LivingCostCalculator({ lang }: LivingCostProps) {
             <option value="danang">Da Nang</option>
             <option value="haiphong">Haiphong</option>
             <option value="cantho">Can Tho</option>
+            <option value="vungtau">{t.vungtau}</option>
+            <option value="nhatrang">{t.nhatrang}</option>
           </select>
         </div>
 

@@ -16,7 +16,7 @@ interface BenefitProps {
 
 export default function BenefitCalculator({ lang }: BenefitProps) {
   const t: any = lang === 'en' ? en : vi;
-  const [mode, setMode] = useState<'unemployment' | 'death'>('unemployment');
+  const [mode, setMode] = useState<'unemployment' | 'death' | 'maternity' | 'sickness'>('unemployment');
   
   // Unemployment States
   const [avgSalary, setAvgSalary] = useState<string>('20000000');
@@ -29,24 +29,44 @@ export default function BenefitCalculator({ lang }: BenefitProps) {
   const [hasUnskilled, setHasUnskilled] = useState<boolean>(false);
   const [deathResult, setDeathResult] = useState<any>(null);
 
+  // Sickness & Maternity
+  const [sickDays, setSickDays] = useState<number>(5);
+  const [maternityResult, setMaternityResult] = useState<any>(null);
+  const [sicknessResult, setSicknessResult] = useState<any>(null);
+
+  const BASE_SALARY = 2340000; // 2.34M VND as of 2024
+
   useEffect(() => {
+    const cleanAvg = parseFloat(avgSalary.replace(/[^0-9]/g, '')) || 0;
+
     if (mode === 'unemployment') {
       const res = calculateUnemploymentBenefit(
-        parseFloat(avgSalary.replace(/[^0-9]/g, '')) || 0,
+        cleanAvg,
         contributionYears * 12,
         region
       );
       setUnemploymentResult(res);
-    } else {
+    } else if (mode === 'death') {
       const res = calculateDeathSupport(
-        parseFloat(avgSalary.replace(/[^0-9]/g, '')) || 0,
+        cleanAvg,
         hasUnskilled,
-        contributionYears, // Simplified post-2014 assumed
+        contributionYears,
         0
       );
       setDeathResult(res);
+    } else if (mode === 'maternity') {
+      setMaternityResult({
+        total: cleanAvg * 6,
+        allowance: BASE_SALARY * 2
+      });
+    } else if (mode === 'sickness') {
+      const dailyRate = (cleanAvg / 24) * 0.75;
+      setSicknessResult({
+        dailyRate,
+        total: dailyRate * sickDays
+      });
     }
-  }, [mode, avgSalary, contributionYears, region, hasUnskilled]);
+  }, [mode, avgSalary, contributionYears, region, hasUnskilled, sickDays]);
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat(lang === 'en' ? 'en-US' : 'vi-VN', {
@@ -67,6 +87,14 @@ export default function BenefitCalculator({ lang }: BenefitProps) {
           className={`${styles.typeBtn} ${mode === 'death' ? styles.active : ''}`}
           onClick={() => setMode('death')}
         >{t.deathSupportMode}</button>
+        <button 
+          className={`${styles.typeBtn} ${mode === 'maternity' ? styles.active : ''}`}
+          onClick={() => setMode('maternity')}
+        >{t.maternityMode}</button>
+        <button 
+          className={`${styles.typeBtn} ${mode === 'sickness' ? styles.active : ''}`}
+          onClick={() => setMode('sickness')}
+        >{t.sicknessMode}</button>
       </div>
 
       <div className={styles.formGrid}>
@@ -132,6 +160,18 @@ export default function BenefitCalculator({ lang }: BenefitProps) {
             </div>
           </div>
         )}
+
+        {mode === 'sickness' && (
+          <div className={styles.inputGroup}>
+            <label className={styles.label}>{t.sickLeaveDays}</label>
+            <input 
+              type="number" 
+              className={styles.input} 
+              value={sickDays}
+              onChange={(e) => setSickDays(parseInt(e.target.value) || 0)}
+            />
+          </div>
+        )}
       </div>
 
       <div className={styles.resultsArea}>
@@ -154,25 +194,57 @@ export default function BenefitCalculator({ lang }: BenefitProps) {
           </div>
         )}
 
-        {mode === 'death' && deathResult && (
-          <div className={styles.resultList}>
-            <div className={styles.resultRow}>
-              <span>{t.funeralAllowance}</span>
-              <span className={styles.value}>{formatCurrency(deathResult.funeralAllowance)}</span>
-            </div>
-            <div className={styles.resultRow}>
-              <span>{t.survivorBenefit} ({t.monthly})</span>
-              <span className={styles.value}>
-                {formatCurrency(deathResult.monthlySurvivorBenefit * relatives)}
-              </span>
-            </div>
-            <div className={styles.resultRow}>
-              <span>{t.survivorBenefitOneTime}</span>
-              <span className={styles.value}>{formatCurrency(deathResult.oneTimeSurvivorBenefit)}</span>
-            </div>
-          </div>
-        )}
-      </div>
+         {mode === 'death' && deathResult && (
+           <div className={styles.resultList}>
+             <div className={styles.resultRow}>
+               <span>{t.funeralAllowance}</span>
+               <span className={styles.value}>{formatCurrency(deathResult.funeralAllowance)}</span>
+             </div>
+             <div className={styles.resultRow}>
+               <span>{t.survivorBenefit} ({t.monthly})</span>
+               <span className={styles.value}>
+                 {formatCurrency(deathResult.monthlySurvivorBenefit * relatives)}
+               </span>
+             </div>
+             <div className={styles.resultRow}>
+               <span>{t.survivorBenefitOneTime}</span>
+               <span className={styles.value}>{formatCurrency(deathResult.oneTimeSurvivorBenefit)}</span>
+             </div>
+           </div>
+         )}
+ 
+         {mode === 'maternity' && maternityResult && (
+           <div className={styles.resultList}>
+             <div className={styles.resultRow}>
+               <span>{t.oneTimeAllowance}</span>
+               <span className={styles.value}>{formatCurrency(maternityResult.allowance)}</span>
+             </div>
+             <div className={styles.resultRow}>
+               <span>{t.benefitTitleMaternity}</span>
+               <span className={styles.value}>{formatCurrency(maternityResult.total)}</span>
+             </div>
+             <div className={styles.resultRow} style={{ borderTop: '1px solid rgba(255,255,255,0.1)', marginTop: '0.5rem', paddingTop: '0.5rem' }}>
+               <span style={{ fontWeight: '800' }}>{t.totalPayment}</span>
+               <span className={styles.value} style={{ fontSize: '1.4rem', color: 'var(--primary)' }}>
+                 {formatCurrency(maternityResult.total + maternityResult.allowance)}
+               </span>
+             </div>
+           </div>
+         )}
+ 
+         {mode === 'sickness' && sicknessResult && (
+           <div className={styles.resultList}>
+             <div className={styles.resultRow}>
+               <span>{t.benefitTitleSickness}</span>
+               <span className={styles.value}>{formatCurrency(sicknessResult.total)}</span>
+             </div>
+             <div className={styles.resultRow}>
+               <span>{t.monthly} ({t.avgSalary6Mo})</span>
+               <span className={styles.value}>{avgSalary}</span>
+             </div>
+           </div>
+         )}
+       </div>
     </div>
   );
 }
