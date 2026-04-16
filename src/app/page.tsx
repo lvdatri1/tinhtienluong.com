@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import Calculator from '@/components/Calculator';
 import BenefitCalculator from '@/components/BenefitCalculator';
 import LivingCostCalculator from '@/components/LivingCostCalculator';
@@ -95,6 +96,11 @@ export default function Home() {
       </section>
 
       <footer className={styles.footer}>
+        <div className={styles.footerLinks}>
+          <Link href="/privacy">{t.privacyLink}</Link>
+          <Link href="/terms">{t.termsLink}</Link>
+          <Link href="/faq">FAQ</Link>
+        </div>
         <p>&copy; {new Date().getFullYear()} Tinh Tien Luong. {t.footerCredit}</p>
       </footer>
     </main>

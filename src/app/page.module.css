@@ -112,6 +112,25 @@
   max-width: 800px;
 }
 
+.footerLinks {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.footerLinks a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.footerLinks a:hover {
+  color: var(--primary);
+}
+
+
 .seoContent {
   max-width: 800px;
   width: 100%;
